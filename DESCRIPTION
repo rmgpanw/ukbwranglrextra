@@ -1,0 +1,28 @@
+Package: ukbwranglrextra
+Title: Exploring UKB Data - Extra
+Version: 0.0.0.9000
+Authors@R: 
+  person("Alasdair", "Warwick", email = "alasdair.warwick06@gmail.com", role = c("aut", "cre"))
+Description: Experimental add-ons to the ukbwranglr R package. 
+License: MIT + file LICENSE
+URL: https://github.com/rmgpanw/ukbwranglrextra
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports:
+    dplyr,
+    fs,
+    haven,
+    magrittr,
+    purrr,
+    reactable,
+    readr,
+    shiny,
+    shinyFiles,
+    stringi,
+    stringr,
+    tibble,
+    tidyselect
+Remotes: 
+    github::rmgpanw/ukbwranglr

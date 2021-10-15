@@ -1,0 +1,29 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# ukbwranglrextra
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+A package containing experimental add-on functions for [`ukbwranglr`](https://rmgpanw.github.io/ukbwranglr/).
+
+## Installation
+
+You can install the development version of ukbwranglrextra from github with:
+
+``` r
+devtools::install_github("rmgpanw/ukbwranglrextra")
+```
