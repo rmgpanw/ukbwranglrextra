@@ -19,7 +19,7 @@
 #' @return A data frame with additional indicator columns for cholesterol, blood
 #'   pressure, insulin, HRT an OCP/minipill medications.
 #' @export
-serive_touchscreen_self_reported_med_bp_dm_chol_exog_hormones_instance_0 <-
+derive_touchscreen_self_reported_med_bp_dm_chol_exog_hormones_instance_0 <-
   function(ukb_main,
            data_dict = ukbwranglr::get_ukb_data_dict(),
            .drop = TRUE) {
@@ -37,14 +37,16 @@ serive_touchscreen_self_reported_med_bp_dm_chol_exog_hormones_instance_0 <-
       )
     )
 
-    ukbwranglr:::check_required_cols_exist(df = ukb_main,
-                                           REQUIRED_FIDS)
 
     # get required fields for instance 0 only (men *and* women)
     touchscreen_self_reported_medication_bp_dm_chol_exog_hormones_cols <- data_dict %>%
       dplyr::filter(.data[["FieldID"]] %in% REQUIRED_FIDS) %>%
       dplyr::filter(.data[["instance"]] == "0") %>%
       dplyr::pull(.data[["descriptive_colnames"]])
+
+    # check these cols are present
+    ukbwranglr:::check_required_cols_exist(df = ukb_main,
+                                           touchscreen_self_reported_medication_bp_dm_chol_exog_hormones_cols)
 
     # reformat
     reformatted_ts_sr_meds <- ukb_main %>%
