@@ -2,7 +2,7 @@
 % Please edit documentation in R/shiny.R
 \name{runMakeDataset}
 \alias{runMakeDataset}
-\title{Launch a shiny app to interactively create a UK Biobank dataset}
+\title{Interactively create a UK Biobank dataset}
 \usage{
 runMakeDataset(
   ukb_data_dict = ukbwranglr::get_ukb_data_dict(),
@@ -35,7 +35,7 @@ about the ideal height/width for the app.}
 \item{...}{Additional parameters passed on to \code{\link[shiny]{shinyApp}}}
 }
 \description{
-Launches a shiny app
+Launches a shiny app to interactively create a UK Biobank dataset
 }
 \examples{
 \dontrun{

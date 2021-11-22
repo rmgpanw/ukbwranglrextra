@@ -1,6 +1,6 @@
-#' Launch a shiny app to interactively create a UK Biobank dataset
+#' Interactively create a UK Biobank dataset
 #'
-#' Launches a shiny app
+#' Launches a shiny app to interactively create a UK Biobank dataset
 #'
 #' @inheritParams ukbwranglr::read_ukb
 #' @inheritParams shiny::shinyApp
