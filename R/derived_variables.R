@@ -21,7 +21,7 @@
 #' @export
 derive_touchscreen_self_reported_med_bp_dm_chol_exog_hormones_instance_0 <-
   function(ukb_main,
-           data_dict = ukbwranglr::get_ukb_data_dict(),
+           ukb_data_dict = ukbwranglr::get_ukb_data_dict(),
            .drop = TRUE) {
 
     REQUIRED_FIDS <- c("6177", "6153")
@@ -37,6 +37,9 @@ derive_touchscreen_self_reported_med_bp_dm_chol_exog_hormones_instance_0 <-
       )
     )
 
+    # make data_dict
+    data_dict <- ukbwranglr::make_data_dict(ukb_main = ukb_main,
+                                            ukb_data_dict = ukb_data_dict)
 
     # get required fields for instance 0 only (men *and* women)
     touchscreen_self_reported_medication_bp_dm_chol_exog_hormones_cols <- data_dict %>%
