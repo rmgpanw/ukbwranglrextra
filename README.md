@@ -4,6 +4,8 @@
 # ukbwranglrextra
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/rmgpanw/ukbwranglrextra/workflows/R-CMD-check/badge.svg)](https://github.com/rmgpanw/ukbwranglrextra/actions)
 <!-- badges: end -->
 
 A package containing experimental add-on functions for
