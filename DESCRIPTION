@@ -5,7 +5,8 @@ Authors@R:
   person("Alasdair", "Warwick", email = "alasdair.warwick06@gmail.com", role = c("aut", "cre"))
 Description: Experimental add-ons to the ukbwranglr R package. 
 License: MIT + file LICENSE
-URL: https://github.com/rmgpanw/ukbwranglrextra
+URL: https://github.com/rmgpanw/ukbwranglrextra,
+    https://rmgpanw.github.io/ukbwranglrextra/
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
