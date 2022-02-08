@@ -3,6 +3,7 @@
 export("%>%")
 export(create_unique_id)
 export(create_unique_id_df)
+export(map_models)
 export(runMakeDataset)
 import(shiny)
 import(shinyFiles)
