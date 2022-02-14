@@ -2,27 +2,74 @@
 % Please edit documentation in R/phewas.R
 \name{map_models}
 \alias{map_models}
-\title{Generate multiple models}
+\title{Create multiple models which vary by one parameter}
 \usage{
 map_models(
   df,
-  dict,
+  params,
   model_str,
-  engine = logistic_reg() \%>\% set_engine("glm")
+  engine = parsnip::set_engine(object = parsnip::logistic_reg(), engine = "glm"),
+  butcher_model = TRUE
 )
 }
 \arguments{
-\item{df}{Data frame}
+\item{df}{Data frame.}
 
-\item{dict}{A data frame with columns 'variable' and 'label'}
+\item{params}{A character vector of values to substitute \code{.x} in \code{model_str}.}
 
 \item{model_str}{A model formula as a string, containing one variable as \code{.x}.}
 
-\item{engine}{A \code{\link{parsnip}} engine}
+\item{engine}{A \href{https://www.tidymodels.org/find/parsnip/}{\code{parsnip}} engine.}
+
+\item{butcher_model}{If \code{TRUE}, the raw models are removed .}
 }
 \value{
 A data frame
 }
 \description{
-Generate multiple models
+Use when creating multiple models which vary by one parameter.
+See example below.
+}
+\details{
+Ideally aim to supply a \code{df} without missing data. Otherwise, check N
+observations for models (in \code{fit} column, \code{model_glance}) to see if many (or
+any) observations were removed.
+}
+\examples{
+# dummy dataset
+mtcars2 <- mtcars \%>\%
+ tibble::rownames_to_column(var = "make") \%>\%
+ dplyr::mutate("is_merc" = ifelse(stringr::str_detect(.data[["make"]], pattern = "^Merc"),
+                                  yes = 1,
+                                  no = 0 )) \%>\%
+ tibble::as_tibble() \%>\%
+ dplyr::mutate(dplyr::across(tidyselect::starts_with("is_"), as.factor))
+
+# preview dummy dataset
+mtcars2
+
+# run `map_models()` - logistic regression to predict Mercedes make
+result <-
+map_models(
+  df = mtcars2,
+  model_str = "is_merc ~ mpg + cyl + disp + {.x}",
+  params = c(GEAR = 'gear', CARB = 'carb'),
+  engine = parsnip::set_engine(object = parsnip::logistic_reg(), engine = "glm"),
+  butcher_model = FALSE
+)
+
+# view result
+result
+
+# model outputs are stored in the `fit` column
+names(result$fit[[1]])
+
+# 'tidy' model outputs are under `model_tidy`
+result$fit[[1]]$model_tidy
+
+# 'glance' model outputs are under `model_glance`
+result$fit[[1]]$model_glance
+
+# `model_raw` contains either the raw model under `result`, or an error message under `error`
+names(result$fit[[1]]$model_raw)
 }

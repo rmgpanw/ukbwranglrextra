@@ -13,7 +13,7 @@ mtcars2 <- mtcars %>%
                           pattern = "^Mazda"),
       yes = 1,
       no = 0
-    ),
+    )
   ) %>%
   tibble::as_tibble() %>%
   dplyr::mutate(dplyr::across(tidyselect::starts_with("is_"),
@@ -24,11 +24,12 @@ test_that("`map_models()` returns expected results", {
   # run function
   result <- map_models(df = mtcars2,
                        model_str = "is_merc ~ mpg + cyl + disp + {.x}",
-                       params = c(DRAT = 'drat',
-                                  WT = 'wt',
-                                  QSEC = 'qsec',
-                                  VS = 'vs',
-                                  AM = 'am',
+                       params = c(
+                         # DRAT = 'drat',
+                         #          WT = 'wt',
+                         #          QSEC = 'qsec',
+                         #          VS = 'vs',
+                         #          AM = 'am',
                                   GEAR = 'gear',
                                   CARB = 'carb'),
                        engine = parsnip::set_engine(object = parsnip::logistic_reg(),

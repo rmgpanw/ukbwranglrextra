@@ -13,6 +13,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports:
     assertthat,
+    broom,
     butcher,
     data.table,
     dplyr,
@@ -21,6 +22,7 @@ Imports:
     haven,
     installr,
     magrittr,
+    parsnip,
     purrr,
     reactable,
     readr,
