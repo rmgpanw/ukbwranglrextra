@@ -70,4 +70,6 @@ test_that("`map_models()` `rm_raw_model` arg works as expected", {
                        engine = parsnip::set_engine(object = parsnip::logistic_reg(),
                                                     engine = "glm"),
                        rm_raw_model = TRUE)
+
+  expect_equal(result_raw_mod_rm$fit[[1]]$model_raw$result, NA)
 })
