@@ -95,6 +95,7 @@ append_rowwise_summary_indicator <- function(df,
 #' participants.
 #'
 #' @inheritParams ukbwranglr::read_ukb
+#' @param ukb_main A UK Biobank main dataset (data frame).
 #' @param instance Character. Optionally specify a single instance to be
 #'   summarised e.g. '1'. Default is `NULL`, in which case the appended columns
 #'   will reflect a summary across all available instances.

@@ -13,6 +13,8 @@ derive_touchscreen_self_reported_med_bp_dm_chol_exog_hormones(
 )
 }
 \arguments{
+\item{ukb_main}{A UK Biobank main dataset (data frame).}
+
 \item{ukb_data_dict}{The UKB data dictionary (available online at the UK
 Biobank
 \href{https://biobank.ctsu.ox.ac.uk/crystal/exinfo.cgi?src=accessing_data_guide}{data
@@ -38,6 +40,7 @@ Summarises field IDs
 data frame contains separate indicator columns for each medication type.
 }
 \details{
-Note that Field ID 6153 applies only to female participants, where as Field
-ID applies to male participants.
+Note that \href{https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=6153}{field ID 6153} applies only to
+female participants, where as \href{https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=6177}{field ID6177} applies to male
+participants.
 }
