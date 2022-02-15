@@ -34,7 +34,7 @@ test_that("`map_models()` returns expected results", {
                                   CARB = 'carb'),
                        engine = parsnip::set_engine(object = parsnip::logistic_reg(),
                                                     engine = "glm"),
-                       butcher_model = FALSE)
+                       rm_raw_model = FALSE)
 
   # expected colnames
   expect_equal(names(result),
@@ -53,4 +53,21 @@ test_that("`map_models()` returns expected results", {
   expect_equal(names(result$fit[[1]]$model_raw),
                expected = c("result", "error"))
 
+})
+
+test_that("`map_models()` `rm_raw_model` arg works as expected", {
+  # run function
+  result_raw_mod_rm <- map_models(df = mtcars2,
+                       model_str = "is_merc ~ mpg + cyl + disp + {.x}",
+                       params = c(
+                         # DRAT = 'drat',
+                         #          WT = 'wt',
+                         #          QSEC = 'qsec',
+                         #          VS = 'vs',
+                         #          AM = 'am',
+                         GEAR = 'gear',
+                         CARB = 'carb'),
+                       engine = parsnip::set_engine(object = parsnip::logistic_reg(),
+                                                    engine = "glm"),
+                       rm_raw_model = TRUE)
 })

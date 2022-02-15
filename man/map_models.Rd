@@ -9,7 +9,7 @@ map_models(
   params,
   model_str,
   engine = parsnip::set_engine(object = parsnip::logistic_reg(), engine = "glm"),
-  butcher_model = TRUE
+  rm_raw_model = TRUE
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ map_models(
 
 \item{engine}{A \href{https://www.tidymodels.org/find/parsnip/}{\code{parsnip}} engine.}
 
-\item{butcher_model}{If \code{TRUE}, the raw models are removed .}
+\item{rm_raw_model}{If \code{TRUE} (the default), the raw models are removed.}
 }
 \value{
 A data frame
@@ -55,7 +55,7 @@ map_models(
   model_str = "is_merc ~ mpg + cyl + disp + {.x}",
   params = c(GEAR = 'gear', CARB = 'carb'),
   engine = parsnip::set_engine(object = parsnip::logistic_reg(), engine = "glm"),
-  butcher_model = FALSE
+  rm_raw_model = FALSE
 )
 
 # view result

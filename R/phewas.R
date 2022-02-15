@@ -11,7 +11,7 @@
 #'@param model_str A model formula as a string, containing one variable as `.x`.
 #'@param engine A [`parsnip`](https://www.tidymodels.org/find/parsnip/) engine.
 #'@param params A character vector of values to substitute `.x` in `model_str`.
-#'@param butcher_model If `TRUE`, the raw models are removed .
+#'@param rm_raw_model If `TRUE` (the default), the raw models are removed.
 #'
 #'@return A data frame
 #'@export
@@ -35,7 +35,7 @@
 #'   model_str = "is_merc ~ mpg + cyl + disp + {.x}",
 #'   params = c(GEAR = 'gear', CARB = 'carb'),
 #'   engine = parsnip::set_engine(object = parsnip::logistic_reg(), engine = "glm"),
-#'   butcher_model = FALSE
+#'   rm_raw_model = FALSE
 #' )
 #'
 #' # view result
@@ -57,7 +57,7 @@ map_models <- function(df,
                        model_str,
                        engine =  parsnip::set_engine(object = parsnip::logistic_reg(),
                                              engine = "glm"),
-                       butcher_model = TRUE) {
+                       rm_raw_model = TRUE) {
   # create list of model formulas
   formulas <- params %>%
     purrr::set_names() %>%
@@ -111,8 +111,8 @@ map_models <- function(df,
         result$model_glance <- broom::glance(result$model_raw$result)
 
         # remove raw model if requested
-        if (butcher_model) {
-          result$model_raw$result <- butcher::butcher(result$model_raw$result)
+        if (rm_raw_model) {
+          result$model_raw$result <- NA
         }
       } else {
         result <- NULL
