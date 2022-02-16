@@ -121,6 +121,12 @@ map_models <- function(df,
       return(result)
     }))
 
+  # add metadata
+  models$model_formula <- model_str
+  models$model_engine <- engine %>%
+    purrr::keep(is.character) %>%
+    purrr::reduce(paste, sep = "; ")
+
   # return results
   return(models)
 }

@@ -43,7 +43,9 @@ test_that("`map_models()` returns expected results", {
                             "option",
                             "result",
                             "wflow_label",
-                            "fit"))
+                            "fit",
+                            "model_formula",
+                            "model_engine"))
 
   # expected names in `fit` column
   expect_equal(names(result$fit[[1]]),
