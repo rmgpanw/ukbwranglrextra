@@ -166,6 +166,13 @@ plot_manhattan_basic <- function(df,
                   y = labs_args$y)
 }
 
+#' Plot a Manhattan plot for GWAS results
+#'
+#' @inheritParams plot_manhattan_basic
+#' @param col_manual Character vector of colours
+#'
+#' @return A data frame
+#' @export
 plot_manhattan_gwas <- function(df,
                                 chr = "CHR",
                                 log10_p = "P",
