@@ -17,6 +17,7 @@ Imports:
     data.table,
     dplyr,
     fs,
+    ggplot2,
     glue,
     haven,
     installr,
