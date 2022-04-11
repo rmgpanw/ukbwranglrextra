@@ -106,7 +106,7 @@ sample_nonsig_results <- function(df,
 #'
 #' @param df A data frame.
 #' @param chr Name of chromosome column. Should be type character or factor.
-#' @param log10_p Name of -log10(p value) column. Should be on -log10 scale.
+#' @param minuslog10_p Name of -log10(p value) column. Should be on -log10 scale.
 #' @param text Name of column with text annotation.
 #' @param order_idx Name of column with order to arrange SNPs. Should be type
 #'   integer.
@@ -117,7 +117,7 @@ sample_nonsig_results <- function(df,
 #' @return A ggplot plot object
 plot_manhattan_basic <- function(df,
                                  chr = "CHR",
-                                 log10_p = "P",
+                                 minuslog10_p = "P",
                                  text = "SNP",
                                  order_idx = "ORDER_IDX",
                                  geom_point_args = list(alpha = 1,
@@ -136,7 +136,7 @@ plot_manhattan_basic <- function(df,
   # plot
   ggplot2::ggplot(df, ggplot2::aes(
     x = .data[[order_idx]],
-    y = .data[[log10_p]],
+    y = .data[[minuslog10_p]],
     text = .data[[text]]
   )) +
 
@@ -147,7 +147,7 @@ plot_manhattan_basic <- function(df,
 
     # Label X axis. Labels positioned at centre of each chromosome
     ggplot2::scale_x_continuous(label = x_axis_df[[chr]],
-                                breaks = x_axis_df[["center"]]) +
+                                breaks = x_axis_df[["center"]])+
 
     # Theme: remove background, legend, grid and panel borders
     ggplot2::theme_bw() +
@@ -162,8 +162,7 @@ plot_manhattan_basic <- function(df,
     ggplot2::scale_y_continuous(expand = c(0, 0.5)) +
 
     # axis labels
-    ggplot2::labs(x = labs_args$x,
-                  y = labs_args$y)
+    ggplot2::labs(!!!labs_args)
 }
 
 #' Plot a Manhattan plot for GWAS results
@@ -175,7 +174,7 @@ plot_manhattan_basic <- function(df,
 #' @export
 plot_manhattan_gwas <- function(df,
                                 chr = "CHR",
-                                log10_p = "P",
+                                minuslog10_p = "P",
                                 text = "SNP",
                                 order_idx = "ORDER_IDX",
                                 geom_point_args = list(alpha = 1,
@@ -194,7 +193,7 @@ plot_manhattan_gwas <- function(df,
 
   plot_manhattan_basic(df = df,
                        chr = chr,
-                       log10_p = log10_p,
+                       minuslog10_p = minuslog10_p,
                        text = text,
                        order_idx = order_idx,
                        geom_point_args = geom_point_args,

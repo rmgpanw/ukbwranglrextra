@@ -1,0 +1,309 @@
+phenotype,category,groupnum,colour
+Bacterial Diseases (excl TB),Infectious Diseases,1,blue
+Chronic viral hepatitis,Infectious Diseases,1,blue
+Encephalitis,Infectious Diseases,1,blue
+Mycoses,Infectious Diseases,1,blue
+HIV,Infectious Diseases,1,blue
+Infection of anal and rectal regions,Infectious Diseases,1,blue
+Infection of bones and joints,Infectious Diseases,1,blue
+Infections of the digestive system,Infectious Diseases,1,blue
+Ear and Upper Respiratory Tract Infections,Infectious Diseases,1,blue
+Eye infections,Infectious Diseases,1,blue
+Infections of the Heart,Infectious Diseases,1,blue
+Infection of liver,Infectious Diseases,1,blue
+Lower Respiratory Tract Infections,Infectious Diseases,1,blue
+Infection of male genital system,Infectious Diseases,1,blue
+Infection of other or unspecified genitourinary system,Infectious Diseases,1,blue
+Other nervous system infections,Infectious Diseases,1,blue
+Other or unspecified infectious organisms,Infectious Diseases,1,blue
+Infections of Other or unspecified organs,Infectious Diseases,1,blue
+Infection of skin and subcutaneous tissues,Infectious Diseases,1,blue
+Meningitis,Infectious Diseases,1,blue
+Parasitic infections,Infectious Diseases,1,blue
+Female pelvic inflammatory disease,Infectious Diseases,1,blue
+Rheumatic fever,Infectious Diseases,1,blue
+Septicaemia,Infectious Diseases,1,blue
+Tuberculosis,Infectious Diseases,1,blue
+Urinary Tract Infections,Infectious Diseases,1,blue
+Viral diseases (excl chronic hepatitis/HIV),Infectious Diseases,1,blue
+Hodgkin Lymphoma,Cancers,2,darkcyan
+Leukaemia,Cancers,2,darkcyan
+Monoclonal gammopathy of undetermined significance (MGUS),Cancers,2,darkcyan
+Myelodysplastic syndromes,Cancers,2,darkcyan
+Non-Hodgkin Lymphoma,Cancers,2,darkcyan
+Multiple myeloma and malignant plasma cell neoplasms,Cancers,2,darkcyan
+Polycythaemia vera,Cancers,2,darkcyan
+Primary Malignancy_biliary tract,Cancers,2,darkcyan
+Primary Malignancy_Bladder,Cancers,2,darkcyan
+Primary Malignancy_Bone and articular cartilage,Cancers,2,darkcyan
+Primary Malignancy_colorectal and anus,Cancers,2,darkcyan
+"Primary Malignancy_Brain, Other CNS and Intracranial",Cancers,2,darkcyan
+Primary Malignancy_Breast,Cancers,2,darkcyan
+Primary Malignancy_Cervical,Cancers,2,darkcyan
+Primary Malignancy_Kidney and Ureter,Cancers,2,darkcyan
+Primary Malignancy_Liver,Cancers,2,darkcyan
+Primary Malignancy_Lung and trachea,Cancers,2,darkcyan
+Primary Malignancy_Malignant Melanoma,Cancers,2,darkcyan
+Primary Malignancy_Mesothelioma,Cancers,2,darkcyan
+Primary Malignancy_Multiple independent sites,Cancers,2,darkcyan
+Primary Malignancy_Oesophageal,Cancers,2,darkcyan
+Primary Malignancy_Oro-pharyngeal,Cancers,2,darkcyan
+Primary Malignancy_Other Organs,Cancers,2,darkcyan
+Primary Malignancy_Ovarian,Cancers,2,darkcyan
+Primary Malignancy_Pancreatic,Cancers,2,darkcyan
+Primary Malignancy_Prostate,Cancers,2,darkcyan
+Primary Malignancy_Other Skin and subcutaneous tissue,Cancers,2,darkcyan
+Primary Malignancy_Stomach,Cancers,2,darkcyan
+Primary Malignancy_Testicular,Cancers,2,darkcyan
+Primary Malignancy_Thyroid,Cancers,2,darkcyan
+Primary Malignancy_Uterine,Cancers,2,darkcyan
+Secondary Malignancy_Adrenal gland,Cancers,2,darkcyan
+Secondary Malignancy_Bone,Cancers,2,darkcyan
+Secondary Malignancy_Bowel,Cancers,2,darkcyan
+"Secondary Malignancy_Brain, Other CNS and Intracranial",Cancers,2,darkcyan
+Secondary malignancy_Liver and intrahepatic bile duct,Cancers,2,darkcyan
+Secondary Malignancy_Lung,Cancers,2,darkcyan
+Secondary Malignancy_Lymph Nodes,Cancers,2,darkcyan
+Secondary Malignancy_Other organs,Cancers,2,darkcyan
+Secondary Malignancy_retroperitoneum and peritoneum,Cancers,2,darkcyan
+Secondary Malignancy_Pleura,Cancers,2,darkcyan
+Benign neoplasm of brain and other parts of central nervous system,Benign Neoplasm/CIN,3,gray50
+"Benign neoplasm of colon, rectum, anus and anal canal",Benign Neoplasm/CIN,3,gray50
+Benign neoplasm of ovary,Benign Neoplasm/CIN,3,gray50
+Benign neoplasm of stomach and duodenum,Benign Neoplasm/CIN,3,gray50
+Benign neoplasm and polyp of uterus,Benign Neoplasm/CIN,3,gray50
+Carcinoma in situ_cervical,Benign Neoplasm/CIN,3,gray50
+"Haemangioma, any site",Benign Neoplasm/CIN,3,gray50
+Leiomyoma of uterus,Benign Neoplasm/CIN,3,gray50
+Cystic Fibrosis,Diseases of the Endocrine System,4,brown
+Diabetes,Diseases of the Endocrine System,4,brown
+Hyperparathyroidism,Diseases of the Endocrine System,4,brown
+Low HDL-C,Diseases of the Endocrine System,4,brown
+Obesity,Diseases of the Endocrine System,4,brown
+Polycystic ovarian syndrome,Diseases of the Endocrine System,4,brown
+Raised LDL-C,Diseases of the Endocrine System,4,brown
+Raised Total Cholesterol,Diseases of the Endocrine System,4,brown
+Raised Triglycerides,Diseases of the Endocrine System,4,brown
+Syndrome of inappropriate secretion of antidiuretic hormone,Diseases of the Endocrine System,4,brown
+Hypo or hyperthyroidism,Diseases of the Endocrine System,4,brown
+,Diseases of the Endocrine System,4,brown
+,Diseases of the Endocrine System,4,brown
+Agranulocytosis,Haematological/Immunological conditions,5,darkorange1
+Other anaemias,Haematological/Immunological conditions,5,darkorange1
+Aplastic anaemias,Haematological/Immunological conditions,5,darkorange1
+Folate deficiency anaemia,Haematological/Immunological conditions,5,darkorange1
+Splenomegaly,Haematological/Immunological conditions,5,darkorange1
+Hyposplenism,Haematological/Immunological conditions,5,darkorange1
+Immunodeficiencies,Haematological/Immunological conditions,5,darkorange1
+Iron deficiency anaemia,Haematological/Immunological conditions,5,darkorange1
+Other haemolytic anaemias,Haematological/Immunological conditions,5,darkorange1
+Primary or Idiopathic Thrombocytopaenia,Haematological/Immunological conditions,5,darkorange1
+Sarcoidosis,Haematological/Immunological conditions,5,darkorange1
+Secondary polycythaemia,Haematological/Immunological conditions,5,darkorange1
+Secondary or other Thrombocytopaenia,Haematological/Immunological conditions,5,darkorange1
+Sickle-cell anaemia,Haematological/Immunological conditions,5,darkorange1
+Sickle-cell trait,Haematological/Immunological conditions,5,darkorange1
+Thalassaemia,Haematological/Immunological conditions,5,darkorange1
+Thalassaemia trait,Haematological/Immunological conditions,5,darkorange1
+Thrombophilia,Haematological/Immunological conditions,5,darkorange1
+Vitamin B12 deficiency anaemia,Haematological/Immunological conditions,5,darkorange1
+Alcohol Problems,Mental Health Disorders,6,magenta
+Anxiety disorders,Mental Health Disorders,6,magenta
+Autism and Asperger's syndrome,Mental Health Disorders,6,magenta
+Bipolar affective disorder and mania,Mental Health Disorders,6,magenta
+"Delirium, not induced by alcohol and other psychoactive substances",Mental Health Disorders,6,magenta
+Dementia,Mental Health Disorders,6,magenta
+Depression,Mental Health Disorders,6,magenta
+Anorexia and bulimia nervosa,Mental Health Disorders,6,magenta
+Hyperkinetic disorders,Mental Health Disorders,6,magenta
+Intellectual disability,Mental Health Disorders,6,magenta
+Obsessive-compulsive disorder,Mental Health Disorders,6,magenta
+Personality disorders,Mental Health Disorders,6,magenta
+"Schizophrenia, schizotypal and delusional disorders",Mental Health Disorders,6,magenta
+Other psychoactive substance misuse,Mental Health Disorders,6,magenta
+Disorders of autonomic nervous system,Neurological conditions,7,darkblue
+Bell's palsy,Neurological conditions,7,darkblue
+Cerebral Palsy,Neurological conditions,7,darkblue
+"Postviral fatigue syndrome, neurasthenia and fibromyalgia",Neurological conditions,7,darkblue
+Diabetic neurological complications,Neurological conditions,7,darkblue
+Epilepsy,Neurological conditions,7,darkblue
+Essential tremor,Neurological conditions,7,darkblue
+Intracranial hypertension,Neurological conditions,7,darkblue
+Migraine,Neurological conditions,7,darkblue
+Motor neuron disease,Neurological conditions,7,darkblue
+Multiple sclerosis,Neurological conditions,7,darkblue
+Myasthenia gravis,Neurological conditions,7,darkblue
+Parkinson's disease,Neurological conditions,7,darkblue
+Peripheral neuropathies (excluding cranial nerve and carpal tunnel syndromes),Neurological conditions,7,darkblue
+Trigeminal neuralgia,Neurological conditions,7,darkblue
+Hearing loss,Diseases of the Ear,8,darkseagreen4
+Meniere disease,Diseases of the Ear,8,darkseagreen4
+Tinnitus,Diseases of the Ear,8,darkseagreen4
+Anterior and Intermediate Uveitis,Diseases of the Eye,9,purple
+Visual impairment and blindness,Diseases of the Eye,9,purple
+Cataract,Diseases of the Eye,9,purple
+Diabetic ophthalmic complications,Diseases of the Eye,9,purple
+Glaucoma,Diseases of the Eye,9,purple
+Keratitis,Diseases of the Eye,9,purple
+Macular degeneration,Diseases of the Eye,9,purple
+Posterior Uveitis,Diseases of the Eye,9,purple
+Ptosis of eyelid,Diseases of the Eye,9,purple
+Retinal detachments and breaks,Diseases of the Eye,9,purple
+Retinal vascular occlusions,Diseases of the Eye,9,purple
+Scleritis and episcleritis,Diseases of the Eye,9,purple
+Abdominal aortic aneurysm,Diseases of the Circulatory System,10,red
+Atrial fibrillation,Diseases of the Circulatory System,10,red
+"Atrioventricular block, first degree",Diseases of the Circulatory System,10,red
+"Atrioventricular block, second degree",Diseases of the Circulatory System,10,red
+"Atrioventricular block, complete",Diseases of the Circulatory System,10,red
+Bifascicular block,Diseases of the Circulatory System,10,red
+Other Cardiomyopathy,Diseases of the Circulatory System,10,red
+Coronary heart disease not otherwise specified,Diseases of the Circulatory System,10,red
+Dilated cardiomyopathy,Diseases of the Circulatory System,10,red
+Heart failure,Diseases of the Circulatory System,10,red
+Hypertension,Diseases of the Circulatory System,10,red
+Hypertrophic Cardiomyopathy,Diseases of the Circulatory System,10,red
+Intracerebral haemorrhage,Diseases of the Circulatory System,10,red
+Ischaemic stroke,Diseases of the Circulatory System,10,red
+Left bundle branch block,Diseases of the Circulatory System,10,red
+Multiple valve dz,Diseases of the Circulatory System,10,red
+Myocardial infarction,Diseases of the Circulatory System,10,red
+Nonrheumatic aortic valve disorders,Diseases of the Circulatory System,10,red
+Nonrheumatic mitral valve disorders,Diseases of the Circulatory System,10,red
+Pericardial effusion (noninflammatory),Diseases of the Circulatory System,10,red
+Peripheral arterial disease,Diseases of the Circulatory System,10,red
+Primary pulmonary hypertension,Diseases of the Circulatory System,10,red
+Pulmonary embolism,Diseases of the Circulatory System,10,red
+Raynaud's syndrome,Diseases of the Circulatory System,10,red
+Rheumatic valve dz,Diseases of the Circulatory System,10,red
+Right bundle branch block,Diseases of the Circulatory System,10,red
+Secondary pulmonary hypertension,Diseases of the Circulatory System,10,red
+Sick sinus syndrome,Diseases of the Circulatory System,10,red
+Stable angina,Diseases of the Circulatory System,10,red
+Stroke NOS,Diseases of the Circulatory System,10,red
+Subarachnoid haemorrhage,Diseases of the Circulatory System,10,red
+Subdural haematoma - nontraumatic,Diseases of the Circulatory System,10,red
+Supraventricular tachycardia,Diseases of the Circulatory System,10,red
+Transient ischaemic attack,Diseases of the Circulatory System,10,red
+Trifascicular block,Diseases of the Circulatory System,10,red
+Unstable Angina,Diseases of the Circulatory System,10,red
+Venous thromboembolic disease (Excl PE),Diseases of the Circulatory System,10,red
+Ventricular tachycardia,Diseases of the Circulatory System,10,red
+Allergic and chronic rhinitis,Diseases of the Respiratory System,11,coral4
+Asbestosis,Diseases of the Respiratory System,11,coral4
+Aspiration pneumonitis,Diseases of the Respiratory System,11,coral4
+Asthma,Diseases of the Respiratory System,11,coral4
+Bronchiectasis,Diseases of the Respiratory System,11,coral4
+COPD,Diseases of the Respiratory System,11,coral4
+Chronic sinusitis,Diseases of the Respiratory System,11,coral4
+Hypertrophy of nasal turbinates,Diseases of the Respiratory System,11,coral4
+Nasal polyp,Diseases of the Respiratory System,11,coral4
+Pleural effusion,Diseases of the Respiratory System,11,coral4
+Pleural plaque,Diseases of the Respiratory System,11,coral4
+Pneumothorax,Diseases of the Respiratory System,11,coral4
+Pulmonary collapse (excl pneumothorax),Diseases of the Respiratory System,11,coral4
+Other interstitial pulmonary diseases with fibrosis,Diseases of the Respiratory System,11,coral4
+Respiratory failure,Diseases of the Respiratory System,11,coral4
+Sleep apnoea,Diseases of the Respiratory System,11,coral4
+Abdominal Hernia,Diseases of the Digestive System,12,chartreuse4
+Alcoholic liver disease,Diseases of the Digestive System,12,chartreuse4
+Anal fissure,Diseases of the Digestive System,12,chartreuse4
+Angiodysplasia of colon,Diseases of the Digestive System,12,chartreuse4
+Anorectal fistula,Diseases of the Digestive System,12,chartreuse4
+Anorectal prolapse,Diseases of the Digestive System,12,chartreuse4
+Appendicitis,Diseases of the Digestive System,12,chartreuse4
+Autoimmune liver disease,Diseases of the Digestive System,12,chartreuse4
+Barrett's oesophagus,Diseases of the Digestive System,12,chartreuse4
+Cholangitis,Diseases of the Digestive System,12,chartreuse4
+Cholecystitis,Diseases of the Digestive System,12,chartreuse4
+Cholelithiasis,Diseases of the Digestive System,12,chartreuse4
+"Liver fibrosis, sclerosis and cirrhosis",Diseases of the Digestive System,12,chartreuse4
+Coeliac disease,Diseases of the Digestive System,12,chartreuse4
+Crohn's disease,Diseases of the Digestive System,12,chartreuse4
+Diaphragmatic hernia,Diseases of the Digestive System,12,chartreuse4
+Diverticular disease of intestine (acute and chronic),Diseases of the Digestive System,12,chartreuse4
+Fatty Liver,Diseases of the Digestive System,12,chartreuse4
+Gastritis and duodenitis,Diseases of the Digestive System,12,chartreuse4
+Gastro-oesophageal reflux disease,Diseases of the Digestive System,12,chartreuse4
+Irritable bowel syndrome,Diseases of the Digestive System,12,chartreuse4
+Hepatic failure,Diseases of the Digestive System,12,chartreuse4
+Oesophagitis and oesophageal ulcer,Diseases of the Digestive System,12,chartreuse4
+Oesophageal varices,Diseases of the Digestive System,12,chartreuse4
+Pancreatitis,Diseases of the Digestive System,12,chartreuse4
+Peptic ulcer disease,Diseases of the Digestive System,12,chartreuse4
+Peritonitis,Diseases of the Digestive System,12,chartreuse4
+Portal hypertension,Diseases of the Digestive System,12,chartreuse4
+Ulcerative colitis,Diseases of the Digestive System,12,chartreuse4
+Volvulus,Diseases of the Digestive System,12,chartreuse4
+Acute Kidney Injury,Diseases of the Genitourinary system,13,black
+Hyperplasia of prostate,Diseases of the Genitourinary system,13,black
+Non-acute cystitis,Diseases of the Genitourinary system,13,black
+Chronic Kidney Disease,Diseases of the Genitourinary system,13,black
+Dysmenorrhoea,Diseases of the Genitourinary system,13,black
+End stage renal disease,Diseases of the Genitourinary system,13,black
+Endometrial hyperplasia and hypertrophy,Diseases of the Genitourinary system,13,black
+Endometriosis,Diseases of the Genitourinary system,13,black
+Erectile dysfunction,Diseases of the Genitourinary system,13,black
+Female infertility,Diseases of the Genitourinary system,13,black
+Glomerulonephritis,Diseases of the Genitourinary system,13,black
+Hydrocoele (incl infected),Diseases of the Genitourinary system,13,black
+Male infertility,Diseases of the Genitourinary system,13,black
+Menorrhagia and polymenorrhoea,Diseases of the Genitourinary system,13,black
+Neuromuscular dysfunction of bladder,Diseases of the Genitourinary system,13,black
+Obstructive and reflux uropathy,Diseases of the Genitourinary system,13,black
+Postcoital and contact bleeding,Diseases of the Genitourinary system,13,black
+Postmenopausal bleeding,Diseases of the Genitourinary system,13,black
+Tubulo-interstitial nephritis,Diseases of the Genitourinary system,13,black
+Undescended testicle,Diseases of the Genitourinary system,13,black
+Urinary Incontinence,Diseases of the Genitourinary system,13,black
+Urolithiasis,Diseases of the Genitourinary system,13,black
+Female genital prolapse,Diseases of the Genitourinary system,13,black
+Congenital malformations of cardiac septa,Perinatal conditions,14,royalblue4
+Down's syndrome,Perinatal conditions,14,royalblue4
+High birth weight,Perinatal conditions,14,royalblue4
+Intrauterine hypoxia,Perinatal conditions,14,royalblue4
+Slow fetal growth or low birth weight,Perinatal conditions,14,royalblue4
+Neonatal jaundice (excl haemolytic dz of the newborn),Perinatal conditions,14,royalblue4
+Patent ductus arteriosus,Perinatal conditions,14,royalblue4
+Post-term infant,Perinatal conditions,14,royalblue4
+Prematurity,Perinatal conditions,14,royalblue4
+Respiratory distress of newborn,Perinatal conditions,14,royalblue4
+Bacterial sepsis of newborn,Perinatal conditions,14,royalblue4
+Spina bifida,Perinatal conditions,14,royalblue4
+Acne,Skin conditions,15,firebrick
+Actinic keratosis,Skin conditions,15,firebrick
+Alopecia areata,Skin conditions,15,firebrick
+Dermatitis (atopc/contact/other/unspecified),Skin conditions,15,firebrick
+Hidradenitis suppurativa,Skin conditions,15,firebrick
+Lichen planus,Skin conditions,15,firebrick
+Pilonidal cyst/sinus,Skin conditions,15,firebrick
+Psoriasis,Skin conditions,15,firebrick
+Rosacea,Skin conditions,15,firebrick
+Seborrheic dermatitis,Skin conditions,15,firebrick
+Urticaria,Skin conditions,15,firebrick
+Vitiligo,Skin conditions,15,firebrick
+Ankylosing spondylitis,Musculoskeletal conditions,16,darkolivegreen
+Carpal tunnel syndrome,Musculoskeletal conditions,16,darkolivegreen
+Collapsed vertebra,Musculoskeletal conditions,16,darkolivegreen
+Enteropathic arthropathy,Musculoskeletal conditions,16,darkolivegreen
+Enthesopathies & synovial disorders,Musculoskeletal conditions,16,darkolivegreen
+Fibromatoses,Musculoskeletal conditions,16,darkolivegreen
+Fracture of hip,Musculoskeletal conditions,16,darkolivegreen
+Fracture of wrist,Musculoskeletal conditions,16,darkolivegreen
+Giant Cell arteritis,Musculoskeletal conditions,16,darkolivegreen
+Gout,Musculoskeletal conditions,16,darkolivegreen
+Intervertebral disc disorders,Musculoskeletal conditions,16,darkolivegreen
+Juvenile arthritis,Musculoskeletal conditions,16,darkolivegreen
+Lupus erythematosus (local and systemic),Musculoskeletal conditions,16,darkolivegreen
+Osteoarthritis (excl spine),Musculoskeletal conditions,16,darkolivegreen
+Osteoporosis,Musculoskeletal conditions,16,darkolivegreen
+Polymyalgia Rheumatica,Musculoskeletal conditions,16,darkolivegreen
+Psoriatic arthropathy,Musculoskeletal conditions,16,darkolivegreen
+Postinfective and reactive arthropathies,Musculoskeletal conditions,16,darkolivegreen
+Rheumatoid Arthritis,Musculoskeletal conditions,16,darkolivegreen
+Systemic sclerosis,Musculoskeletal conditions,16,darkolivegreen
+Scoliosis,Musculoskeletal conditions,16,darkolivegreen
+Sjogren's disease,Musculoskeletal conditions,16,darkolivegreen
+Spinal stenosis,Musculoskeletal conditions,16,darkolivegreen
+Spondylolisthesis,Musculoskeletal conditions,16,darkolivegreen
+Spondylosis,Musculoskeletal conditions,16,darkolivegreen

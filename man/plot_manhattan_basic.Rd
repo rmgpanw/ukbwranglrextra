@@ -7,7 +7,7 @@
 plot_manhattan_basic(
   df,
   chr = "CHR",
-  log10_p = "P",
+  minuslog10_p = "P",
   text = "SNP",
   order_idx = "ORDER_IDX",
   geom_point_args = list(alpha = 1, size = 2),
@@ -19,7 +19,7 @@ plot_manhattan_basic(
 
 \item{chr}{Name of chromosome column. Should be type character or factor.}
 
-\item{log10_p}{Name of -log10(p value) column. Should be on -log10 scale.}
+\item{minuslog10_p}{Name of -log10(p value) column. Should be on -log10 scale.}
 
 \item{text}{Name of column with text annotation.}
 

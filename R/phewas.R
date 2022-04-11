@@ -94,7 +94,10 @@ map_models <- function(df,
 
       # set up
       result <- list()
-      fit_safely <- purrr::safely(purrr::partial(parsnip::fit, .x$workflow[[1]], df), otherwise = NULL)
+      fit_safely <- purrr::safely(purrr::partial(parsnip::fit,
+                                                 .x$workflow[[1]],
+                                                 df),
+                                  otherwise = NULL)
 
       # fit
       result$model_raw <- fit_safely()
