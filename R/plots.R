@@ -115,6 +115,7 @@ sample_nonsig_results <- function(df,
 #' @param labs_args List of arguments to be passed to [ggplot2::labs()].
 #'
 #' @return A ggplot plot object
+#' @export
 plot_manhattan_basic <- function(df,
                                  chr = "CHR",
                                  minuslog10_p = "P",
