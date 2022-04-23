@@ -14,7 +14,9 @@ RoxygenNote: 7.1.2
 Imports:
     assertthat,
     broom,
+    codemapper,
     data.table,
+    DBI,
     dplyr,
     fs,
     ggplot2,
@@ -38,6 +40,7 @@ Imports:
     ukbwranglr,
     workflowsets
 Remotes: 
+    gitlab::rmgpanw/codemapper,
     github::rmgpanw/ukbwranglr
 Suggests: 
     testthat (>= 3.0.0)
