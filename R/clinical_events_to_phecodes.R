@@ -305,6 +305,161 @@ get_clinical_events_source <- function(clinical_events,
   return(result)
 }
 
+#' Reverse map from phecodes to Read and ICD 9
+#'
+#' Requires the output from [map_clinical_events_to_phecodes()], which maps UK
+#' Biobank clinical events from Read 2, Read 3 and ICD-9 to ICD-10, then uses
+#' [Phecode Map 1.2 with ICD-10 Codes
+#' (beta)](https://phewascatalog.org/phecodes_icd10) to map these ICD-10
+#' equivalents (and any actual ICD-10 records) to Phecodes. This function uses
+#' the output from [map_clinical_events_to_phecodes()] to *reverse* map from
+#' phecodes to Read 2, Read 3, ICD-9 and ICD-10. This is useful for checking
+#' which raw clinical codes have been used in any phecode-defined phenotypes.
+#'
+#' @param clinical_events_phecodes A data frame created by
+#'   [map_clinical_events_to_phecodes()].
+#' @inheritParams codemapper::lookup_codes
+#'
+#' @return A data frame with columns "phecode", "phecode_description",
+#'   "data_coding", "code" "description", "icd10_equivalent" and
+#'   "icd10_description". Column 'code' contains the original 'raw' UK clinical
+#'   codes, with code type indicated by the 'data_coding' column.
+#' @export
+make_phecode_reverse_map <- function(clinical_events_phecodes,
+                                     all_lkps_maps) {
+
+  start_time <- proc.time()
+  # append code types
+  clinical_events_phecodes <- ukbwranglr::clinical_events_sources() %>%
+    dplyr::select(tidyselect::all_of(c("source",
+                                       "data_coding"))) %>%
+    dplyr::right_join(clinical_events_phecodes,
+                      by = "source")
+
+  # make `code` = `icd10_code` (currently `code` is `NA` if source uses icd10
+  # coding)
+  clinical_events_phecodes <- clinical_events_phecodes %>%
+    dplyr::mutate("code" = dplyr::case_when(
+      .data[["data_coding"]] == "icd10" ~ .data[["icd10"]],
+      TRUE ~ .data[["code"]]
+    ))
+
+  # select required cols only
+  clinical_events_phecodes <- clinical_events_phecodes %>%
+    dplyr::select(tidyselect::all_of(c(
+      "code",
+      "data_coding",
+      "icd10",
+      "phecode"
+    )))
+
+  # check there are no columns with missing values (there should be none)
+  na_summary <- clinical_events_phecodes %>%
+    purrr::map_dbl(~ sum(is.na(.x)))
+
+  cols_with_missing_values <- subset(na_summary,
+                                     na_summary > 0)
+
+  assertthat::assert_that(
+    length(cols_with_missing_values) == 0,
+    msg = paste0(
+      "The following columns contain `NA` values (there should be none): ",
+      stringr::str_c(names(cols_with_missing_values),
+                     sep = "",
+                     collapse = ", ")
+    )
+  )
+
+  # get distinct phecode/code/combinations only
+  clinical_events_phecodes <- clinical_events_phecodes %>%
+    dplyr::distinct()
+
+  # append code descriptions
+  clinical_events_phecodes_split <- split(
+    clinical_events_phecodes,
+    clinical_events_phecodes$data_coding
+  )
+
+  code_descriptions <- clinical_events_phecodes_split %>%
+    purrr::imap(~ codemapper::lookup_codes(codes = .x$code,
+                                    code_type = .y,
+                                    all_lkps_maps = all_lkps_maps,
+                                    preferred_description_only = TRUE,
+                                    standardise_output = TRUE,
+                                    unrecognised_codes = "warning",
+                                    col_filters = codemapper::default_col_filters()) %>%
+           dplyr::select(tidyselect::all_of(c(
+             "code",
+             "description"
+           ))))
+
+  clinical_events_phecodes <- clinical_events_phecodes_split %>%
+    # append code descriptions
+    purrr::imap( ~ .x %>%
+                   dplyr::left_join(code_descriptions[[.y]],
+                                    by = "code")) %>%
+
+    # combine
+    dplyr::bind_rows()
+
+  # append phecode_description
+  phecode_descriptions <- codemapper::lookup_codes(codes = clinical_events_phecodes$phecode,
+                                                   code_type = "phecode",
+                                                   all_lkps_maps = all_lkps_maps,
+                                                   preferred_description_only = TRUE,
+                                                   standardise_output = TRUE,
+                                                   unrecognised_codes = "error",
+                                                   col_filters = codemapper::default_col_filters()) %>%
+    dplyr::select(
+      "phecode" = .data[["code"]],
+      "phecode_description" = .data[["description"]]
+    )
+
+  clinical_events_phecodes <- clinical_events_phecodes %>%
+    dplyr::left_join(phecode_descriptions,
+              by = c("phecode"))
+
+  # append icd10 equivalent descriptions
+  icd10_descriptions <- codemapper::lookup_codes(codes = clinical_events_phecodes$icd10,
+                                                 code_type = "icd10",
+                                                 all_lkps_maps = all_lkps_maps,
+                                                 preferred_description_only = TRUE,
+                                                 standardise_output = TRUE,
+                                                 unrecognised_codes = "warning",
+                                                 col_filters = codemapper::default_col_filters()) %>%
+    dplyr::select(
+      "icd10" = .data[["code"]],
+      "icd10_description" = .data[["description"]]
+    ) %>%
+
+    # any warnings will have already appeared above
+    suppressWarnings()
+
+  clinical_events_phecodes <- clinical_events_phecodes %>%
+    dplyr::left_join(icd10_descriptions,
+              by = c("icd10"))
+
+  # reorder cols
+  clinical_events_phecodes <- clinical_events_phecodes %>%
+    dplyr::select(tidyselect::all_of(
+      c(
+        "phecode",
+        "phecode_description",
+        "data_coding",
+        "code",
+        "description"
+      )
+    ),
+    "icd10_equivalent" = .data[["icd10"]],
+    .data[["icd10_description"]])
+
+  # TODO - codes_like() function, use this to make get_undivided_3char_icd10()
+  # function (use this to re-append 'X' and avoid warnings for these codes
+  # above)
+
+  ukbwranglr:::time_taken_message(start_time)
+  return(clinical_events_phecodes)
+}
 
 # PRIVATE -----------------------------------------------------------------
 
