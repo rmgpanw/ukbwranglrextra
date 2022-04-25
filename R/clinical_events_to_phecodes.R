@@ -1,5 +1,25 @@
 # EXPORTED ----------------------------------------------------------------
 
+map_clinical_events_to_phecodes2 <- function(clinical_events,
+                                             all_lkps_maps = "all_lkps_maps.db",
+                                             min_date_only = FALSE) {
+  # ascertain available code types in `clinical_events`
+  clinical_events_sources_to_map <- clinical_events %>%
+    dplyr::select(.data[["source"]]) %>%
+    dplyr::distinct() %>%
+    dplyr::collect()
+
+  clinical_events_sources_to_map <- ukbwranglr::clinical_events_sources() %>%
+    dplyr::select(tidyselect::all_of(
+      c("source",
+        "data_coding")
+    )) %>%
+    dplyr::filter(.data[["data_coding" %in% c("icd10",
+                                              "icd9",
+                                              "read2")]])
+
+}
+
 #' Map UK Biobank clinical events to phecodes
 #'
 #'
