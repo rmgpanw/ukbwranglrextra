@@ -16,6 +16,13 @@ map_clinical_events_to_phecodes <- function(clinical_events,
                                             all_lkps_maps = "all_lkps_maps.db",
                                             min_date_only = FALSE) {
 
+  # utility function to strip 'X' from undivided 3 character ICD-10 codes
+  strip_x_from_3char_icd10 <- function(df) {
+    df %>%
+      dplyr::mutate("icd10" = stringr::str_remove(.data[["icd10"]],
+                                                  "X$"))
+  }
+
   start_time <- proc.time()
   message("***MAPPING clinical_events TO PHECODES***")
 
@@ -66,6 +73,7 @@ map_clinical_events_to_phecodes <- function(clinical_events,
     all_lkps_maps = all_lkps_maps,
     strict_ukb = FALSE
   ) %>%
+    strip_x_from_3char_icd10() %>%
     map_icd10_to_phecode(all_lkps_maps = all_lkps_maps)
 
   # Death -------------------------------------------------------------------
@@ -99,6 +107,7 @@ map_clinical_events_to_phecodes <- function(clinical_events,
       all_lkps_maps = all_lkps_maps,
       strict_ukb = FALSE
     ) %>%
+    strip_x_from_3char_icd10() %>%
     map_icd10_to_phecode(all_lkps_maps = all_lkps_maps)
 
   # GP - read 2 -------------------------------------------------------------
@@ -118,6 +127,7 @@ map_clinical_events_to_phecodes <- function(clinical_events,
       all_lkps_maps = all_lkps_maps,
       strict_ukb = FALSE
     ) %>%
+    strip_x_from_3char_icd10() %>%
     map_icd10_to_phecode(all_lkps_maps = all_lkps_maps)
 
   # Combine -----------------------------------------------------------------
