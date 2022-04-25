@@ -46,5 +46,5 @@ code type. A column is appended containing the newly mapped codes.
 The \code{clinical_events} data frame can contain multiple sources, but an error
 is raised by default if these do not all use the same data coding (see
 \code{\link[ukbwranglr:clinical_events_sources]{ukbwranglr::clinical_events_sources()}} for recognised data sources and their
-respective dagta codings).
+respective data codings).
 }
