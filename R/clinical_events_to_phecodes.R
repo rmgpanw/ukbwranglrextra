@@ -167,7 +167,7 @@ map_clinical_events_to_phecodes <- function(clinical_events,
 #' The `clinical_events` data frame can contain multiple sources, but an error
 #' is raised by default if these do not all use the same data coding (see
 #' [ukbwranglr::clinical_events_sources()] for recognised data sources and their
-#' respective dagta codings).
+#' respective data codings).
 #'
 #' @param clinical_events A clinical events data frame created by
 #'   [ukbwranglr::tidy_clinical_events()]
