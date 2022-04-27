@@ -31,13 +31,31 @@
     <loc>https://rmgpanw.github.io/ukbwranglrextra/reference/derive_touchscreen_self_reported_med_bp_dm_chol_exog_hormones.html</loc>
   </url>
   <url>
+    <loc>https://rmgpanw.github.io/ukbwranglrextra/reference/download_caliber_repo.html</loc>
+  </url>
+  <url>
     <loc>https://rmgpanw.github.io/ukbwranglrextra/reference/dummy_manhattan_df.html</loc>
   </url>
   <url>
     <loc>https://rmgpanw.github.io/ukbwranglrextra/reference/get_caliber_categories_mapping.html</loc>
   </url>
   <url>
+    <loc>https://rmgpanw.github.io/ukbwranglrextra/reference/get_clinical_events_source.html</loc>
+  </url>
+  <url>
     <loc>https://rmgpanw.github.io/ukbwranglrextra/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://rmgpanw.github.io/ukbwranglrextra/reference/make_phecode_reverse_map.html</loc>
+  </url>
+  <url>
+    <loc>https://rmgpanw.github.io/ukbwranglrextra/reference/map_clinical_events_to_phecodes.html</loc>
+  </url>
+  <url>
+    <loc>https://rmgpanw.github.io/ukbwranglrextra/reference/map_clinical_events_to_phecodes2.html</loc>
+  </url>
+  <url>
+    <loc>https://rmgpanw.github.io/ukbwranglrextra/reference/map_codes_ukb_clinical_events.html</loc>
   </url>
   <url>
     <loc>https://rmgpanw.github.io/ukbwranglrextra/reference/map_models.html</loc>
