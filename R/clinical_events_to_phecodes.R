@@ -1,23 +1,117 @@
+
+# CONSTANTS ---------------------------------------------------------------
+
+CLINICAL_EVENTS_SOURCES_MAPPED_TO_PHECODES <- c(
+  # icd10
+  "f40001",
+  "f40002",
+  "f20002_icd10",
+  "f40006",
+  "f41270",
+
+  # icd9
+  "f40013",
+  "f41271",
+
+  # gp read 3
+  "gpc1_r3",
+  "gpc2_r3",
+  "gpc3_r3",
+  "gpc4_r3",
+
+  # gp read 2
+  "gpc1_r2",
+  "gpc2_r2",
+  "gpc3_r2",
+  "gpc4_r2"
+)
+
 # EXPORTED ----------------------------------------------------------------
 
+#' Map UK Biobank clinical events to phecodes
+#'
+#' UK Biobank clinical events sources that are recorded in ICD10 are mapped
+#' directly to phecodes, while non-ICD10 sources are mapped to phecodes via
+#' ICD10.
+#'
+#' Maps the following UK Biobank clinical events sources to phecodes: `r stringr::str_c(CLINICAL_EVENTS_SOURCES_MAPPED_TO_PHECODES, sep = "", collapse = ", ")`.
+#'
+#' @inheritParams ukbwranglr::extract_phenotypes
+#' @inheritParams codemapper::codes_starting_with
+#' @param min_date_only If `TRUE`, result will be filtered for only the earliest
+#'   date per eid-phecode pair (date will be recorded as `NA` for cases where
+#'   there are no dates).
+#'
+#' @return A data frame with column names 'eid', 'source', 'index', 'code',
+#'   'icd10', 'phecode' and 'date'.
+#' @export
+#' @examples
+#'
 map_clinical_events_to_phecodes2 <- function(clinical_events,
-                                             all_lkps_maps = "all_lkps_maps.db",
+                                             all_lkps_maps = NULL,
                                              min_date_only = FALSE) {
+
+  start_time <- proc.time()
+
+  # utility function to strip 'X' from undivided 3 character ICD-10 codes
+  strip_x_from_3char_icd10 <- function(df) {
+    df %>%
+      dplyr::mutate("icd10" = stringr::str_remove(.data[["icd10"]],
+                                                  "X$"))
+  }
+
   # ascertain available code types in `clinical_events`
-  clinical_events_sources_to_map <- clinical_events %>%
+  available_clinical_events_sources <- clinical_events %>%
     dplyr::select(.data[["source"]]) %>%
     dplyr::distinct() %>%
     dplyr::collect()
 
-  clinical_events_sources_to_map <- ukbwranglr::clinical_events_sources() %>%
-    dplyr::select(tidyselect::all_of(
-      c("source",
-        "data_coding")
-    )) %>%
-    dplyr::filter(.data[["data_coding" %in% c("icd10",
-                                              "icd9",
-                                              "read2")]])
+  # full list of clinical events sources that may potentially be mapped to
+  # phecodes
+  clinical_events_sources_to_map <-
+    ukbwranglr::clinical_events_sources() %>%
+    dplyr::filter(
+      .data[["source"]] %in% !!CLINICAL_EVENTS_SOURCES_MAPPED_TO_PHECODES
+    ) %>%
+    # combine category and description (for informative messages later)
+    dplyr::mutate(
+      "category_description" = paste0("**", .data[["category"]], "** - ", .data[["description"]])
+    ) %>%
+    dplyr::select(tidyselect::all_of(c("source",
+                                       "data_coding",
+                                       "category_description")))
 
+  # list of clinical events sources to actually be mapped (intersect of above)
+  clinical_events_sources_to_map <- clinical_events_sources_to_map %>%
+    dplyr::filter(.data[["source"]] %in% !!available_clinical_events_sources$source)
+
+  # loop through - map icd10 directly to phecode; for read and icd9, map to
+  # phecodes via icd10
+  message("***MAPPING clinical_events TO PHECODES***")
+  map_clinical_events_source_to_phecode_partial <- purrr::partial(map_clinical_events_source_to_phecode,
+                                                                  all_lkps_maps = all_lkps_maps,
+                                                                  clinical_events = clinical_events)
+
+  result <- clinical_events_sources_to_map %>%
+    purrr::imap(clinical_events_sources_to_map)
+
+  # combine
+  result <- result %>%
+  dplyr::bind_rows() %>%
+    dplyr::distinct()
+
+  if (min_date_only) {
+    result <- result %>%
+      # take only earliest date (or `NA` if no dates recorded) per eid-phecode
+      dplyr::group_by(.data[["eid"]],
+                      .data[["phecode"]]) %>%
+      dplyr::arrange(.data[["date"]]) %>%
+      dplyr::slice_head(n = 1) %>%
+      dplyr::ungroup()
+  }
+
+  ukbwranglr:::time_taken_message(start_time)
+  return(result)
 }
 
 #' Map UK Biobank clinical events to phecodes
@@ -492,6 +586,63 @@ make_phecode_reverse_map <- function(clinical_events_phecodes,
 }
 
 # PRIVATE -----------------------------------------------------------------
+
+#' Helper function for `map_clinical_events_to_phecode()`
+#'
+#' Maps a single clinical events source to phecodes. If mapping from an ICD10
+#' source, maps directly to phecodes. If mapping from a non-ICD10 source, maps
+#' to phecodes via ICD10.
+#'
+#' @param source Character.
+#' @param data_coding Character.
+#' @param category_description Character (for informative message).
+#' @param all_lkps_maps List of lookup/mappings tables (or path to database
+#'   version of this).
+#' @param clinical_events UKB clinical events table.
+#' @noRd
+#'
+#' @return A data frame.
+map_clinical_events_source_to_phecode <- function(source,
+                                                  data_coding,
+                                                  category_description,
+                                                  all_lkps_maps,
+                                                  clinical_events) {
+  # informative message
+  message(category_description)
+
+
+  # map icd10 to phecode
+  if (data_coding == "icd10") {
+    clinical_events_source <-
+      get_clinical_events_source(clinical_events = clinical_events,
+                                 sources = c("f20002_icd10"))
+
+    clinical_events_source <- clinical_events_source %>%
+      dplyr::rename("icd10" = .data[["code"]])
+
+    result <-
+      map_icd10_to_phecode(clinical_events = clinical_events_source,
+                           all_lkps_maps = all_lkps_maps)
+  } else {
+    # map non-ICD10 to phecode (via ICD10)
+    clinical_events_source <-
+      get_clinical_events_source(clinical_events = clinical_events,
+                                 sources = source)
+
+    result <- map_codes_ukb_clinical_events(
+      clinical_events = clinical_events_source,
+      from = data_coding,
+      to = "icd10",
+      all_lkps_maps = all_lkps_maps,
+      strict_ukb = FALSE
+    ) %>%
+      strip_x_from_3char_icd10() %>%
+      map_icd10_to_phecode(all_lkps_maps = all_lkps_maps)
+  }
+
+  # result - a data frame
+  return(result)
+}
 
 #' Asssert that all data sources in a `clinical_events` data frame match a
 #' single `data_coding`

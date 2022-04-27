@@ -6,6 +6,9 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/rmgpanw/ukbwranglrextra/workflows/R-CMD-check/badge.svg)](https://github.com/rmgpanw/ukbwranglrextra/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/rmgpanw/ukbwranglrextra/branch/main/graph/badge.svg)](https://app.codecov.io/gh/rmgpanw/ukbwranglrextra?branch=main)
+[![pkgdown](https://github.com/rmgpanw/ukbwranglrextra/workflows/pkgdown/badge.svg)](https://github.com/rmgpanw/ukbwranglrextra/actions)
 <!-- badges: end -->
 
 A package containing experimental add-on functions for
