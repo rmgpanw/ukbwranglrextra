@@ -14,11 +14,11 @@
 # all the children codes fall under the same disease category. These need
 # expanding to include all children codes.
 
-## ICD10 codes with modifiers (e.g. E10, I70.0) --------------------------
+## ICD10 codes with modifiers (e.g. E10, M79.7) --------------------------
 
 
 
-## Check 3 character ICD10 codes without modifiers are expanded (e.g.  D25, leiomyoma --------
+## Check 3 character ICD10 codes without modifiers are expanded (e.g.  D25, leiomyoma) --------
 
 
 

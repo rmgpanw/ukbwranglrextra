@@ -1,0 +1,81 @@
+---
+title: "CALIBER code lists"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{CALIBER code lists}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: references.bib
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ukbwranglrextra)
+```
+
+# Introduction
+
+The CALIBER team have manually curated clinical code lists for 308 common health conditions, providing a rich resource for researchers working with electronic health records.[@kuan2019] All code lists are publicly available in csv format on github.[^1] These are divided into primary care (Read 2 codes and Medcodes) and secondary care (ICD10).
+
+[^1]: See also the [HDRUK Phenotype Library](https://phenotypes.healthdatagateway.org/) for even more clinical code lists.
+
+The UK Biobank contains both [linked primary and secondary care diagnostic records](https://biobank.ndph.ox.ac.uk/ukb/label.cgi?id=100091). Primary care records are in both Read 2 and Read 3 formats, while secondary care records are in both ICD10 and ICD9 formats (although a large majority are ICD10). Data analysts may therefore wish to extend the CALIBER resource by mapping to Read 3 and ICD9. The original Read 2 and ICD10 CALIBER codes also require reformatting to match the format in UK Biobank data.
+
+The CALIBER repository may be imported into R, reformatted for use with UK Biobank data,[^2] and mapped to Read 3 and ICD9 equivalents using `map_caliber_for_ukb()`. This vignette outlines the steps performed to achieve this.
+
+[^2]: See [UK Biobank resource 592](https://biobank.ndph.ox.ac.uk/ukb/refer.cgi?id=592) for further information on the various clinical coding systems.
+
+# Reformatting Read 2 and ICD10 codes
+
+## Read 2
+
+-   The last 2 digits indicate whether the associated description is 'preferred' or 'secondary' - these need removing
+
+The following read codes are not present in the Read 2 lookup table provided by UK Biobank resource 592:
+
+| CALIBER disease                          | Unrecognised Read 2 code                                                                                                                          |
+|------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| Alcohol Problems                         | Z191.; Z1911; Z1912; Z4B1.                                                                                                                        |
+| Anxiety disorders                        | Z481.; Z4L1.                                                                                                                                      |
+| Coeliac disease                          | ZC2C2                                                                                                                                             |
+| Crohn's disease                          | ZR3S.                                                                                                                                             |
+| Dementia                                 | ZS7C5                                                                                                                                             |
+| End stage renal disease                  | Z1A..; Z1A1.; Z1A2.; Z919.; Z9191; Z9192; Z9193; Z91A.                                                                                            |
+| Erectile dysfunction                     | Z9E9.; ZG436                                                                                                                                      |
+| Hearing loss                             | Z8B5.; Z8B51; Z8B53; Z8B55; Z911.; Z9111; Z9113; Z9114; Z9115; Z9117; Z9118; Z9119; Z911A; Z911B; Z911E; Z911G; Z9E81; ZE87.; ZL716; ZN569; ZN56A |
+| Heart failure                            | ZRad.                                                                                                                                             |
+| Intrauterine hypoxia                     | Z2648; Z2649; Z264A; Z264B                                                                                                                        |
+| Lupus erythematosus (local and systemic) | ZRq8.; ZRq9.                                                                                                                                      |
+| Obesity                                  | ZC2CM                                                                                                                                             |
+| Other psychoactive substance misuse      | 9G24.; 9K4..; Z1Q62; Z416.                                                                                                                        |
+| Tinnitus                                 | Z9112; ZEB..                                                                                                                                      |
+| Transient ischaemic attack               | Z7CE7                                                                                                                                             |
+| Urinary Incontinence                     | Z9EA.                                                                                                                                             |
+| Visual impairment and blindness          | Z96..; Z961.; Z962.; ZK74.; ZN568; ZN56A; ZRhO.; ZRr6.                                                                                            |
+
+## ICD10
+
+The following ICD10 codes are not present in the ICD10 lookup table provided by UK Biobank resource 592:[^3]
+
+[^3]: These were retired after the 4th ICD10 edition, whereas the lookup table in UK Biobank resource 592 is based on the 5th edition.
+
+| CALIBER disease                             | Unrecognised ICD10 code |
+|---------------------------------------------|-------------------------|
+| Infections of Other or unspecified organs   | A90; A91                |
+| Viral diseases (excl chronic hepatitis/HIV) | A90; A91                |
+
+# Mapping to Read 3 and ICD9
+
+## Read 2 to Read 3
+
+## ICD10 to ICD9
+
+## Removing duplicates
+
+# References

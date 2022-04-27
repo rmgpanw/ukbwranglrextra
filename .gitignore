@@ -3,3 +3,4 @@ docs/.gitignore
 docs
 .Renviron
 .Rhistory
+inst/doc

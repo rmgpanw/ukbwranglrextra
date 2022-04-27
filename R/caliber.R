@@ -12,6 +12,7 @@
 #' @return A data frame
 #' @export
 #'
+#' @family CALIBER
 #' @examples
 #' get_caliber_categories_mapping()
 get_caliber_categories_mapping <- function() {
@@ -26,20 +27,22 @@ get_caliber_categories_mapping <- function() {
 
 #' Download the caliber github repository
 #'
-#' Downloads to `tempdir()` and unzips.
+#' Downloads to `tempdir()` and unzips, invisibly returning the file path to the
+#' unzipped folder.
 #'
-#' @param url
+#' @param url Download URL (e.g.
+#'   "https://github.com/spiros/chronological-map-phenotypes/archive/refs/heads/master.zip")
 #'
-#' @return File path to downloaded (and unzipped) repository.
-download_caliber_repo <- function(
-  url = "https://github.com/spiros/chronological-map-phenotypes/archive/refs/heads/master.zip") {
+#' @return File path to downloaded (and unzipped) repository, invisibly.
+#' @family CALIBER
+download_caliber_repo <- function(url) {
 
   # file paths
   caliber_repo_zip <- tempfile()
   caliber_repo_unzipped <- file.path(tempdir(), tempfile())
 
   # download zip file
-  download.file(url,
+  utils::download.file(url,
                 destfile = caliber_repo_zip)
 
   # unzip
@@ -47,7 +50,7 @@ download_caliber_repo <- function(
                exdir = caliber_repo_unzipped)
 
   # return path to downloaded and unzipped directory
-  return(list.files(caliber_repo_unzipped))
+  invisible(list.files(caliber_repo_unzipped))
 }
 
 # OVERVIEW ----------------------------------------------------------------
@@ -59,11 +62,68 @@ download_caliber_repo <- function(
 # Medcodes are dropped and only primary descriptions are kept for read2 and read3
 
 
-# FUNCTIONS ---------------------------------------------------------------
+#' Reformat and map CALIBER codes for use with UK Biobank data
+#'
+#'
+#'
+#' @param caliber_dir_path Path to CALIBER repository directory.
+#' @inheritParams codemapper::codes_starting_with
+#'
+#' @return A data frame.
+#' @export
+#' @family CALIBER
+map_caliber_for_ukb <- function(caliber_dir_path = download_caliber_repo(),
+                                all_lkps_maps) {
 
-map_caliber_for_ukb <- function() {
-# read_csv() - all columns read as type character
-read_csv_as_character <- purrr::partial(readr::read_csv, col_types = readr::cols(.default = "c"))
+  # read all caliber csv files into named list -------
+  message("Reading CALIBER codelists into R")
+  result <- read_caliber_raw(caliber_dir_path)
+
+  # reformat read2 and icd10 codes --------
+  message("Reformatting Read 2 codes")
+  result$primary_care_codes_read2 <- reformat_caliber_read2(result$primary_care_codes_read2)
+
+  message("Reformatting ICD10 codes")
+  result$secondary_care_codes_icd10 <- reformat_caliber_icd10(result$secondary_care_codes_icd10,
+                                                              all_lkps_maps = all_lkps_maps)
+
+
+  # Map codes (read2 - read3,  icd10 - icd9) --------------------------------
+  message("Mapping read2 codes to read3")
+  result$primary_care_codes_read3 <-
+    map_caliber_multiple_disease_categories(
+      result$primary_care_codes_read2,
+      all_lkps_maps = all_lkps_maps,
+      from = "read2",
+      to = "read3"
+    )
+
+  message("Mapping icd10 to icd9 codes")
+  result$secondary_care_codes_icd9 <-
+    map_caliber_multiple_disease_categories(
+      result$secondary_care_codes_icd10,
+      all_lkps_maps = all_lkps_maps,
+      from = "icd10",
+      to = "icd9"
+    )
+
+  message("Removing 'X' from ends of 3 character ICD10 codes")
+  result$secondary_care_codes_icd10 <- codemapper:::strip_x_from_alt_icd10(df = result$secondary_care_codes_icd10,
+                                                                           alt_icd10_code_col = "code")
+
+  # combine
+  message("Concatenating results")
+  dplyr::bind_rows(result)
+}
+
+
+# PRIVATE ---------------------------------------------------------------
+
+
+
+## Read and reformat CALIBER codes --------------------------------------------------
+
+### Read CALIBER (raw) --------------------
 
 # standardising functions for primary and secondary care (ICD and OPCS4) csv files
 standardise_primary_care <- purrr::as_mapper(
@@ -74,7 +134,7 @@ standardise_primary_care <- purrr::as_mapper(
       values_to = "code"
     ) %>%
     dplyr::mutate(
-      author = "caliber"
+      "author" = "caliber"
     ) %>%
     dplyr::select(
       disease = Disease,
@@ -114,8 +174,89 @@ standardise_secondary_care_opcs4 <- purrr::as_mapper(
     )
 )
 
-# functions to reformat codes for UKB
+# reads a list of csv files into a named list, standardises, then combines into single df
+read_csv_to_named_list_and_combine <-
+  function(# directory where files are located
+    directory,
+    # vector of file names
+    filenames,
+    # function to process each file with
+    standardising_function) {
+    result <- as.list(file.path(directory, filenames))
+    names(result) <- filenames
 
+    result %>%
+      purrr::map(~ readr::read_csv(.x,
+                                   progress = FALSE,
+                                   col_types = readr::cols(.default = "c"))) %>%
+      purrr::map(standardising_function) %>%
+      dplyr::bind_rows()
+  }
+
+#' Read local copy of CALIBER repo into R
+#'
+#' @param caliber_dir_path Path to local copy of CALIBER github repo.
+#'
+#' @return A named list of data frames.
+#' @noRd
+read_caliber_raw <- function(caliber_dir_path) {
+  # Set filepath constants --------------------------------------------------
+
+  CALIBER_PRIMARY <- file.path(caliber_dir_path, "primary_care")
+  CALIBER_SECONDARY <- file.path(caliber_dir_path, "secondary_care")
+  CSV_REGEX <- "+\\.csv$"
+
+  PRIMARY_CARE_FILES <- list.files(CALIBER_PRIMARY,
+                                   pattern = CSV_REGEX)
+
+  SECONDARY_CARE_FILES <- list.files(CALIBER_SECONDARY,
+                                     pattern = CSV_REGEX)
+
+  SECONDARY_CARE_FILES_ICD <-
+    subset(SECONDARY_CARE_FILES, grepl("^ICD_", SECONDARY_CARE_FILES))
+  SECONDARY_CARE_FILES_OPCS <-
+    subset(SECONDARY_CARE_FILES, grepl("^OPCS_", SECONDARY_CARE_FILES))
+
+  # Read CALIBER files and reformat -----------------------------------------
+
+  # Note - currently removes medcodes and secondary descriptions for read codes
+
+  # Read files into 3 dataframes - primary care and secondary care (ICD and OPCS)
+  result <- c(
+    "primary_care_codes_read2",
+    "primary_care_codes_read3",
+    "secondary_care_codes_icd10",
+    "secondary_care_codes_icd9",
+    "secondary_care_codes_opcs4"
+  ) %>%
+    purrr::set_names() %>%
+    purrr::map(~ NULL)
+
+  message("Reading CALIBER clinical codes lists into R")
+  message("Primary care Read 2 (1 of 3)")
+  result$primary_care_codes_read2 <-
+    read_csv_to_named_list_and_combine(CALIBER_PRIMARY,
+                                       filenames = PRIMARY_CARE_FILES,
+                                       standardising_function = standardise_primary_care)
+
+  message("Secondary care ICD10 (2 of 3)")
+  result$secondary_care_codes_icd10 <-
+    read_csv_to_named_list_and_combine(CALIBER_SECONDARY,
+                                       filenames = SECONDARY_CARE_FILES_ICD,
+                                       standardising_function = standardise_secondary_care_icd10)
+
+  message("Secondary care OPCS4 (3 of 3)")
+  result$secondary_care_codes_opcs4 <-
+    read_csv_to_named_list_and_combine(CALIBER_SECONDARY,
+                                       filenames = SECONDARY_CARE_FILES_OPCS,
+                                       standardising_function = standardise_secondary_care_opcs4)
+
+  return(result)
+}
+
+### Reformat CALIBER --------------------------------------------------------
+
+# functions to reformat codes for UKB
 get_icd10_codes_with_modifiers <- function(icd10_lkp) {
   icd10_lkp %>%
     dplyr::collect() %>%
@@ -225,7 +366,7 @@ expand_3_char_icd10_codes <- function(icd10_df,
     tidyr::fill(tidyselect::everything(),
                 .direction = "up")
 
-  assertthat::assert_that(nrow(result) == nrow(na.omit(result)),
+  assertthat::assert_that(nrow(result) == nrow(stats::na.omit(result)),
                           msg = "Error when expanding 3 character ICD10 codes! Some cells are `NA`")
 
   return(result)
@@ -270,13 +411,6 @@ reformat_caliber_icd10 <- function(icd10_df,
       )
     )
 
-  # TODO - raise issue on caliber repo. Temp fix for single code 'N23.X' here (should just be 'N23' on caliber)
-  icd10_df <- icd10_df %>%
-    dplyr::mutate(code = dplyr::case_when(
-      code == "N23.X" ~ "N23",
-      TRUE ~ code
-    ))
-
   # 3 character codes with no children (e.g. 'A38', Scarlet fever, 'I10', Essential (primary) hypertension)
   # need 'X' appended, so that mapping to ICD9 will work
   icd10_format_3_char_codes <- all_lkps_maps$icd10_lkp %>%
@@ -298,6 +432,9 @@ reformat_caliber_icd10 <- function(icd10_df,
 
   return(icd10_df)
 }
+
+
+### Map CALIBER -------------------------------------------------------------
 
 # functions to map codes from read2 to read3 and icd10 to icd9
 map_caliber_single_disease_category <- function(df,
@@ -379,109 +516,4 @@ map_caliber_multiple_disease_categories <- function(df,
 
   # combine list of results into a single df and return
   return(dplyr::bind_rows(result))
-}
-
-# reads a list of csv files into a named list, standardises, then combines into single df
-read_csv_to_named_list_and_combine <- function(
-  directory, # directory where files are located
-  filenames, # vector of file names
-  standardising_function, # function to process each file with
-  file_ext = ".csv", # file extension to remove
-  read_function = read_csv_as_character # function read files
-) {
-  paste(directory, filenames, sep = "/") %>%
-    purrr::set_names(nm = stringr::str_replace(filenames,
-                                               file_ext,
-                                               "")) %>% # remove '.csv'
-    purrr::map(read_function) %>%
-    purrr::map(standardising_function) %>%
-    dplyr::bind_rows()
-}
-
-# MAIN --------------------------------------------------------------------
-
-get_caliber_codes_standardise_and_map <- function(all_lkps_maps) {
-
-
-  # Download caliber repo ---------------------------------------------------
-  message("Downloading code lists from caliber repo")
-  caliber_dir_path <- download_caliber_repo()
-
-  # Set filepath constants --------------------------------------------------
-
-  CALIBER_PRIMARY <- file.path(caliber_dir_path, "primary_care")
-  CALIBER_SECONDARY <- file.path(caliber_dir_path, "secondary_care")
-  CSV_REGEX <- "+\\.csv$"
-
-  PRIMARY_CARE_FILES <- list.files(CALIBER_PRIMARY,
-                                   pattern = CSV_REGEX)
-
-  SECONDARY_CARE_FILES <- list.files(CALIBER_SECONDARY,
-                                     pattern = CSV_REGEX)
-
-  SECONDARY_CARE_FILES_ICD <- subset(SECONDARY_CARE_FILES, grepl("^ICD_", SECONDARY_CARE_FILES))
-  SECONDARY_CARE_FILES_OPCS <- subset(SECONDARY_CARE_FILES, grepl("^OPCS_", SECONDARY_CARE_FILES))
-
-  # Read CALIBER files and reformat -----------------------------------------
-
-  # Note - currently removes medcodes and secondary descriptions for read codes
-
-  # Read files into 3 dataframes - primary care and secondary care (ICD and OPCS)
-  result <- c(
-    "primary_care_codes_read2",
-    "primary_care_codes_read3",
-    "secondary_care_codes_icd10",
-    "secondary_care_codes_icd9",
-    "secondary_care_codes_opcs4"
-  ) %>%
-    purrr::set_names() %>%
-    purrr::map(~ NULL)
-
-  message("Reading caliber clinical codes lists into R and reformtting")
-  result$primary_care_codes_read2 <-
-    read_csv_to_named_list_and_combine(CALIBER_PRIMARY,
-                                       filenames = PRIMARY_CARE_FILES,
-                                       standardising_function = standardise_primary_care) %>%
-    reformat_caliber_read2()
-
-  result$secondary_care_codes_icd10 <-
-    read_csv_to_named_list_and_combine(CALIBER_SECONDARY,
-                                       filenames = SECONDARY_CARE_FILES_ICD,
-                                       standardising_function = standardise_secondary_care_icd10) %>%
-    reformat_caliber_icd10(all_lkps_maps = all_lkps_maps)
-
-  result$secondary_care_codes_opcs4 <-
-    read_csv_to_named_list_and_combine(CALIBER_SECONDARY,
-                                       filenames = SECONDARY_CARE_FILES_OPCS,
-                                       standardising_function = standardise_secondary_care_opcs4)
-
-
-  # Map codes (read2 - read3,  icd10 - icd9) --------------------------------
-  message("Mapping read2 codes to read3")
-  result$primary_care_codes_read3 <-
-    map_caliber_multiple_disease_categories(
-      result$primary_care_codes_read2,
-      all_lkps_maps = all_lkps_maps,
-      from = "read2",
-      to = "read3"
-    )
-
-  message("Mapping icd10 to icd9 codes")
-  result$secondary_care_codes_icd9 <-
-    map_caliber_multiple_disease_categories(
-      result$secondary_care_codes_icd10,
-      all_lkps_maps = all_lkps_maps,
-      from = "icd10",
-      to = "icd9"
-    )
-
-  message("Removing 'X' from ends of 3 character ICD10 codes")
-  result$secondary_care_codes_icd10 <- codemapper:::strip_x_from_alt_icd10(df = result$secondary_care_codes_icd10,
-                                                                           alt_icd10_code_col = "code")
-
-  # combine
-  message("Concatenating results")
-  dplyr::bind_rows(result)
-}
-
 }

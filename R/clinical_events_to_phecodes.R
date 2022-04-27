@@ -46,7 +46,14 @@ CLINICAL_EVENTS_SOURCES_MAPPED_TO_PHECODES <- c(
 #'   'icd10', 'phecode' and 'date'.
 #' @export
 #' @examples
+#' # dummy clinical events data frame
+#' ukbwranglrextra:::DUMMY_CLINICAL_EVENTS
 #'
+#' # map to phecodes
+#' map_clinical_events_to_phecodes2(
+#'   clinical_events = ukbwranglrextra:::DUMMY_CLINICAL_EVENTS,
+#'   all_lkps_maps = ukbwranglrextra:::ALL_LKPS_MAPS,
+#'   min_date_only = FALSE)
 map_clinical_events_to_phecodes2 <- function(clinical_events,
                                              all_lkps_maps = NULL,
                                              min_date_only = FALSE) {

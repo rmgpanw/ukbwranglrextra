@@ -4,17 +4,16 @@
 \alias{download_caliber_repo}
 \title{Download the caliber github repository}
 \usage{
-download_caliber_repo(
- 
-    url = "https://github.com/spiros/chronological-map-phenotypes/archive/refs/heads/master.zip"
-)
+download_caliber_repo(url)
 }
 \arguments{
-\item{url}{}
+\item{url}{Download URL (e.g.
+"https://github.com/spiros/chronological-map-phenotypes/archive/refs/heads/master.zip")}
 }
 \value{
-File path to downloaded (and unzipped) repository.
+File path to downloaded (and unzipped) repository, invisibly.
 }
 \description{
-Downloads to \code{tempdir()} and unzips.
+Downloads to \code{tempdir()} and unzips, invisibly returning the file path to the
+unzipped folder.
 }
