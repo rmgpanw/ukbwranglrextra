@@ -53,13 +53,6 @@ map_clinical_events_to_phecodes2 <- function(clinical_events,
 
   start_time <- proc.time()
 
-  # utility function to strip 'X' from undivided 3 character ICD-10 codes
-  strip_x_from_3char_icd10 <- function(df) {
-    df %>%
-      dplyr::mutate("icd10" = stringr::str_remove(.data[["icd10"]],
-                                                  "X$"))
-  }
-
   # ascertain available code types in `clinical_events`
   available_clinical_events_sources <- clinical_events %>%
     dplyr::select(.data[["source"]]) %>%
@@ -73,32 +66,54 @@ map_clinical_events_to_phecodes2 <- function(clinical_events,
     dplyr::filter(
       .data[["source"]] %in% !!CLINICAL_EVENTS_SOURCES_MAPPED_TO_PHECODES
     ) %>%
-    # combine category and description (for informative messages later)
-    dplyr::mutate(
-      "category_description" = paste0("**", .data[["category"]], "** - ", .data[["description"]])
-    ) %>%
-    dplyr::select(tidyselect::all_of(c("source",
-                                       "data_coding",
-                                       "category_description")))
+
+    dplyr::arrange(.data[["category"]])
 
   # list of clinical events sources to actually be mapped (intersect of above)
   clinical_events_sources_to_map <- clinical_events_sources_to_map %>%
     dplyr::filter(.data[["source"]] %in% !!available_clinical_events_sources$source)
 
+  # combine category and description (for informative messages later)
+  clinical_events_sources_to_map$rowid <- 1:nrow(clinical_events_sources_to_map)
+
+  clinical_events_sources_to_map <- clinical_events_sources_to_map %>%
+    dplyr::mutate(
+      "category_description" = paste0("[", .data[["rowid"]], "] **", .data[["category"]], "** - ", .data[["description"]])
+    ) %>%
+    dplyr::select(tidyselect::all_of(c("source",
+                                       "data_coding",
+                                       "category_description")))
+
   # loop through - map icd10 directly to phecode; for read and icd9, map to
   # phecodes via icd10
-  message("***MAPPING clinical_events TO PHECODES***")
+  message(
+    paste0(
+      "Identified the following ",
+      length(clinical_events_sources_to_map$category_description),
+      " data sources to map to phecodes: ",
+      stringr::str_c(clinical_events_sources_to_map$category_description,
+                     sep = "",
+                     collapse = ", ")
+    )
+  )
+
+  message("\n***MAPPING clinical_events TO PHECODES***\n")
+
   map_clinical_events_source_to_phecode_partial <- purrr::partial(map_clinical_events_source_to_phecode,
                                                                   all_lkps_maps = all_lkps_maps,
                                                                   clinical_events = clinical_events)
 
   result <- clinical_events_sources_to_map %>%
-    purrr::imap(clinical_events_sources_to_map)
+    purrr::pmap(map_clinical_events_source_to_phecode_partial)
 
-  # combine
+  # combine, remove duplicate rows and reorder columns
   result <- result %>%
-  dplyr::bind_rows() %>%
-    dplyr::distinct()
+    dplyr::bind_rows() %>%
+    dplyr::distinct() %>%
+    dplyr::select(tidyselect::all_of(c(
+      ukbwranglr:::CLINICAL_EVENTS_COLHEADERS
+    )),
+    tidyselect::everything())
 
   if (min_date_only) {
     result <- result %>%
@@ -129,13 +144,6 @@ map_clinical_events_to_phecodes2 <- function(clinical_events,
 map_clinical_events_to_phecodes <- function(clinical_events,
                                             all_lkps_maps = "all_lkps_maps.db",
                                             min_date_only = FALSE) {
-
-  # utility function to strip 'X' from undivided 3 character ICD-10 codes
-  strip_x_from_3char_icd10 <- function(df) {
-    df %>%
-      dplyr::mutate("icd10" = stringr::str_remove(.data[["icd10"]],
-                                                  "X$"))
-  }
 
   start_time <- proc.time()
   message("***MAPPING clinical_events TO PHECODES***")
@@ -187,7 +195,7 @@ map_clinical_events_to_phecodes <- function(clinical_events,
     all_lkps_maps = all_lkps_maps,
     strict_ukb = FALSE
   ) %>%
-    strip_x_from_3char_icd10() %>%
+    codemapper:::strip_x_from_3char_icd10() %>%
     map_icd10_to_phecode(all_lkps_maps = all_lkps_maps)
 
   # Death -------------------------------------------------------------------
@@ -221,7 +229,7 @@ map_clinical_events_to_phecodes <- function(clinical_events,
       all_lkps_maps = all_lkps_maps,
       strict_ukb = FALSE
     ) %>%
-    strip_x_from_3char_icd10() %>%
+    codemapper:::strip_x_from_3char_icd10() %>%
     map_icd10_to_phecode(all_lkps_maps = all_lkps_maps)
 
   # GP - read 2 -------------------------------------------------------------
@@ -241,7 +249,7 @@ map_clinical_events_to_phecodes <- function(clinical_events,
       all_lkps_maps = all_lkps_maps,
       strict_ukb = FALSE
     ) %>%
-    strip_x_from_3char_icd10() %>%
+    codemapper:::strip_x_from_3char_icd10() %>%
     map_icd10_to_phecode(all_lkps_maps = all_lkps_maps)
 
   # Combine -----------------------------------------------------------------
@@ -418,12 +426,6 @@ get_clinical_events_source <- function(clinical_events,
   result <- clinical_events %>%
     dplyr::filter(.data[["source"]] %in% !!sources) %>%
     dplyr::collect()
-
-  # update class of result
-  class(result) <- c(stringr::str_c(sort(sources),
-                                    sep = "",
-                                    collapse = "_"),
-                     class(result))
 
   # return result
   return(result)
@@ -615,7 +617,7 @@ map_clinical_events_source_to_phecode <- function(source,
   if (data_coding == "icd10") {
     clinical_events_source <-
       get_clinical_events_source(clinical_events = clinical_events,
-                                 sources = c("f20002_icd10"))
+                                 sources = source)
 
     clinical_events_source <- clinical_events_source %>%
       dplyr::rename("icd10" = .data[["code"]])
@@ -636,7 +638,7 @@ map_clinical_events_source_to_phecode <- function(source,
       all_lkps_maps = all_lkps_maps,
       strict_ukb = FALSE
     ) %>%
-      strip_x_from_3char_icd10() %>%
+      codemapper:::strip_x_from_3char_icd10() %>%
       map_icd10_to_phecode(all_lkps_maps = all_lkps_maps)
   }
 

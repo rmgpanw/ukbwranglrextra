@@ -1,4 +1,7 @@
 
+
+# DUMMY DATA --------------------------------------------------------------
+
 mtcars2 <- mtcars %>%
   tibble::rownames_to_column(var = "make") %>%
   dplyr::mutate(
@@ -18,6 +21,10 @@ mtcars2 <- mtcars %>%
   tibble::as_tibble() %>%
   dplyr::mutate(dplyr::across(tidyselect::starts_with("is_"),
                               as.factor))
+
+
+# TESTS -------------------------------------------------------------------
+
 
 # `map_models()` ----------------------------------------------------------
 test_that("`map_models()` returns expected results", {

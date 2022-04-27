@@ -12,7 +12,8 @@ coverage](https://codecov.io/gh/rmgpanw/ukbwranglrextra/branch/main/graph/badge.
 <!-- badges: end -->
 
 A package containing experimental add-on functions for
-[`ukbwranglr`](https://rmgpanw.github.io/ukbwranglr/).
+[`ukbwranglr`](https://rmgpanw.github.io/ukbwranglr/) and
+[`codemapper`](https://rmgpanw.github.io/codemapper/).
 
 ## Installation
 
