@@ -10,6 +10,12 @@
     <loc>https://rmgpanw.github.io/ukbwranglrextra/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://rmgpanw.github.io/ukbwranglrextra/articles/caliber.html</loc>
+  </url>
+  <url>
+    <loc>https://rmgpanw.github.io/ukbwranglrextra/articles/index.html</loc>
+  </url>
+  <url>
     <loc>https://rmgpanw.github.io/ukbwranglrextra/authors.html</loc>
   </url>
   <url>
@@ -47,6 +53,9 @@
   </url>
   <url>
     <loc>https://rmgpanw.github.io/ukbwranglrextra/reference/make_phecode_reverse_map.html</loc>
+  </url>
+  <url>
+    <loc>https://rmgpanw.github.io/ukbwranglrextra/reference/map_caliber_for_ukb.html</loc>
   </url>
   <url>
     <loc>https://rmgpanw.github.io/ukbwranglrextra/reference/map_clinical_events_to_phecodes.html</loc>

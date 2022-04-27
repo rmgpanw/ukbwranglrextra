@@ -25,6 +25,12 @@ code type. A column is appended containing the newly mapped codes."><!-- mathjax
       <ul class="navbar-nav me-auto"><li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/caliber.html">CALIBER code lists</a>
+  </div>
+</li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -48,7 +54,7 @@ code type. A column is appended containing the newly mapped codes."><!-- mathjax
 
     <div class="ref-description section level2">
     <p>Joins the existing <code>code</code> column to a mapping data frame created by
-codemapper::get_mapping_df, then filters out any missing values for the new
+<a href="https://rdrr.io/pkg/codemapper/man/get_mapping_df.html" class="external-link">codemapper::get_mapping_df</a>, then filters out any missing values for the new
 code type. A column is appended containing the newly mapped codes.</p>
     </div>
 
@@ -69,7 +75,7 @@ code type. A column is appended containing the newly mapped codes.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>clinical_events</dt>
 <dd><p>A clinical events data frame created by
-<code>ukbwranglr::tidy_clinical_events()</code></p></dd>
+<code><a href="https://rdrr.io/pkg/ukbwranglr/man/tidy_clinical_events.html" class="external-link">ukbwranglr::tidy_clinical_events()</a></code></p></dd>
 <dt>from</dt>
 <dd><p>Coding type being mapped from</p></dd>
 <dt>to</dt>
@@ -84,7 +90,7 @@ code type. A column is appended containing the newly mapped codes.</p>
 <dd><p>Named list of SQLite database with lookup/mapping tables</p></dd>
 <dt>strict_ukb</dt>
 <dd><p>If <code>TRUE</code>, extra checks are performed to check that
-<code>source</code> and <code>data_coding</code> match <code>ukbwranglr::clinical_events_sources()</code>,
+<code>source</code> and <code>data_coding</code> match <code><a href="https://rdrr.io/pkg/ukbwranglr/man/clinical_events_sources.html" class="external-link">ukbwranglr::clinical_events_sources()</a></code>,
 and that column names match those expected for a clinical events table.</p></dd>
 </dl></div>
     <div class="section level2">
@@ -95,7 +101,7 @@ and that column names match those expected for a clinical events table.</p></dd>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The <code>clinical_events</code> data frame can contain multiple sources, but an error
 is raised by default if these do not all use the same data coding (see
-<code>ukbwranglr::clinical_events_sources()</code> for recognised data sources and their
+<code><a href="https://rdrr.io/pkg/ukbwranglr/man/clinical_events_sources.html" class="external-link">ukbwranglr::clinical_events_sources()</a></code> for recognised data sources and their
 respective data codings).</p>
     </div>
 

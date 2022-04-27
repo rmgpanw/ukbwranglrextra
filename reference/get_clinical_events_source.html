@@ -21,6 +21,12 @@
       <ul class="navbar-nav me-auto"><li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/caliber.html">CALIBER code lists</a>
+  </div>
+</li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -59,10 +65,10 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>clinical_events</dt>
 <dd><p>A clinical events table (data frame or <code>tbl_dbi</code>
-object) created by <code>ukbwranglr::tidy_clinical_events()</code>.</p></dd>
+object) created by <code><a href="https://rdrr.io/pkg/ukbwranglr/man/tidy_clinical_events.html" class="external-link">ukbwranglr::tidy_clinical_events()</a></code>.</p></dd>
 <dt>sources</dt>
 <dd><p>A character vector of data sources. Must be listed under
-<code>source</code> in <code>ukbwranglr::clinical_events_sources()</code>.</p></dd>
+<code>source</code> in <code><a href="https://rdrr.io/pkg/ukbwranglr/man/clinical_events_sources.html" class="external-link">ukbwranglr::clinical_events_sources()</a></code>.</p></dd>
 <dt>allow_missing_sources</dt>
 <dd><p>If <code>FALSE</code> (default), an error is raised if any
 values for <code>sources</code> are not present in <code>clinical_events</code>. If <code>TRUE</code>, a

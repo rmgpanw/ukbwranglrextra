@@ -33,6 +33,12 @@ which raw clinical codes have been used in any phecode-defined phenotypes."><!--
       <ul class="navbar-nav me-auto"><li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/caliber.html">CALIBER code lists</a>
+  </div>
+</li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -77,8 +83,8 @@ which raw clinical codes have been used in any phecode-defined phenotypes.</p>
 <dt>all_lkps_maps</dt>
 <dd><p>Either a named list of lookup and mapping tables (either
 data frames or <code>tbl_dbi</code> objects), or the path to a SQLite database
-containing these tables (see also <code>build_all_lkps_maps()</code> and
-<code>all_lkps_maps_to_db()</code>). By default, will look for a SQLite datbase called
+containing these tables (see also <code><a href="https://rdrr.io/pkg/codemapper/man/build_all_lkps_maps.html" class="external-link">build_all_lkps_maps()</a></code> and
+<code><a href="https://rdrr.io/pkg/codemapper/man/all_lkps_maps_to_db.html" class="external-link">all_lkps_maps_to_db()</a></code>). By default, will look for a SQLite datbase called
 <code>all_lkps_maps.db</code> in the current working directory.</p></dd>
 </dl></div>
     <div class="section level2">

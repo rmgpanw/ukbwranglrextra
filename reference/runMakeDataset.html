@@ -21,6 +21,12 @@
       <ul class="navbar-nav me-auto"><li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/caliber.html">CALIBER code lists</a>
+  </div>
+</li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -49,8 +55,8 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">runMakeDataset</span><span class="op">(</span>
-  ukb_data_dict <span class="op">=</span> <span class="fu">ukbwranglr</span><span class="fu">::</span><span class="fu">get_ukb_data_dict</span><span class="op">(</span><span class="op">)</span>,
-  ukb_codings <span class="op">=</span> <span class="fu">ukbwranglr</span><span class="fu">::</span><span class="fu">get_ukb_codings</span><span class="op">(</span><span class="op">)</span>,
+  ukb_data_dict <span class="op">=</span> <span class="fu">ukbwranglr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ukbwranglr/man/get_ukb_data_dict.html" class="external-link">get_ukb_data_dict</a></span><span class="op">(</span><span class="op">)</span>,
+  ukb_codings <span class="op">=</span> <span class="fu">ukbwranglr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ukbwranglr/man/get_ukb_codings.html" class="external-link">get_ukb_codings</a></span><span class="op">(</span><span class="op">)</span>,
   options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>launch.browser <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>

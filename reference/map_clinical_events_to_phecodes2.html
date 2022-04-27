@@ -25,6 +25,12 @@ ICD10."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/math
       <ul class="navbar-nav me-auto"><li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/caliber.html">CALIBER code lists</a>
+  </div>
+</li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -65,14 +71,14 @@ ICD10.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>clinical_events</dt>
 <dd><p>A long format data frame created by
-<code>tidy_clinical_events</code>, <code>tidy_gp_clinical</code>,
-<code>tidy_gp_scripts</code> or <code>make_clinical_events_db</code>.
-This can also be a <code>tbl_dbi</code> object.</p></dd>
+<code><a href="https://rdrr.io/pkg/ukbwranglr/man/tidy_clinical_events.html" class="external-link">tidy_clinical_events</a></code>, <code><a href="https://rdrr.io/pkg/ukbwranglr/man/tidy_gp_clinical.html" class="external-link">tidy_gp_clinical</a></code>,
+<code><a href="https://rdrr.io/pkg/ukbwranglr/man/tidy_gp_scripts.html" class="external-link">tidy_gp_scripts</a></code> or <code><a href="https://rdrr.io/pkg/ukbwranglr/man/make_clinical_events_db.html" class="external-link">make_clinical_events_db</a></code>.
+This can also be a <code><a href="https://dbplyr.tidyverse.org/reference/tbl.src_dbi.html" class="external-link">tbl_dbi</a></code> object.</p></dd>
 <dt>all_lkps_maps</dt>
 <dd><p>Either a named list of lookup and mapping tables (either
 data frames or <code>tbl_dbi</code> objects), or the path to a SQLite database
-containing these tables (see also <code>build_all_lkps_maps()</code> and
-<code>all_lkps_maps_to_db()</code>). By default, will look for a SQLite datbase called
+containing these tables (see also <code><a href="https://rdrr.io/pkg/codemapper/man/build_all_lkps_maps.html" class="external-link">build_all_lkps_maps()</a></code> and
+<code><a href="https://rdrr.io/pkg/codemapper/man/all_lkps_maps_to_db.html" class="external-link">all_lkps_maps_to_db()</a></code>). By default, will look for a SQLite datbase called
 <code>all_lkps_maps.db</code> in the current working directory.</p></dd>
 <dt>min_date_only</dt>
 <dd><p>If <code>TRUE</code>, result will be filtered for only the earliest
