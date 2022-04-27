@@ -231,7 +231,7 @@ expand_3_char_icd10_codes <- function(icd10_df,
   return(result)
 }
 
-# read2 codes: filter for only primary descriptions and remove last 2 characters
+# read2 codes: remove last 2 characters
 # (the last 2 characters indicate whether description is primary or not for a
 # code) and remove "." from ICD-10 codes
 reformat_caliber_read2 <- function(read2_df) {
