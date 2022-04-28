@@ -18,3 +18,9 @@ was obtained from CALIBER's \href{https://github.com/spiros/chronological-map-ph
 \examples{
 get_caliber_categories_mapping()
 }
+\seealso{
+Other CALIBER: 
+\code{\link{download_caliber_repo}()},
+\code{\link{map_caliber_for_ukb}()}
+}
+\concept{CALIBER}

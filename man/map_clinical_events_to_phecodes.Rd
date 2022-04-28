@@ -6,7 +6,7 @@
 \usage{
 map_clinical_events_to_phecodes(
   clinical_events,
-  all_lkps_maps = "all_lkps_maps.db",
+  all_lkps_maps = NULL,
   min_date_only = FALSE
 )
 }
@@ -31,5 +31,20 @@ A data frame with column names 'eid', 'source', 'index', 'code',
 'icd10', 'phecode' and 'date'.
 }
 \description{
-Map UK Biobank clinical events to phecodes
+UK Biobank clinical events sources that are recorded in ICD10 are mapped
+directly to phecodes, while non-ICD10 sources are mapped to phecodes via
+ICD10.
+}
+\details{
+Maps the following UK Biobank clinical events sources to phecodes: f40001, f40002, f20002_icd10, f40006, f41270, f40013, f41271, gpc1_r3, gpc2_r3, gpc3_r3, gpc4_r3, gpc1_r2, gpc2_r2, gpc3_r2, gpc4_r2.
+}
+\examples{
+# dummy clinical events data frame
+ukbwranglrextra:::DUMMY_CLINICAL_EVENTS
+
+# map to phecodes
+map_clinical_events_to_phecodes2(
+  clinical_events = ukbwranglrextra:::DUMMY_CLINICAL_EVENTS,
+  all_lkps_maps = ukbwranglrextra:::ALL_LKPS_MAPS,
+  min_date_only = FALSE)
 }

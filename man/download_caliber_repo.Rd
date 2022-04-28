@@ -17,3 +17,9 @@ File path to downloaded (and unzipped) repository, invisibly.
 Downloads to \code{tempdir()} and unzips, invisibly returning the file path to the
 unzipped folder.
 }
+\seealso{
+Other CALIBER: 
+\code{\link{get_caliber_categories_mapping}()},
+\code{\link{map_caliber_for_ukb}()}
+}
+\concept{CALIBER}

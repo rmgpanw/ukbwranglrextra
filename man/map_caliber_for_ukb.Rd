@@ -22,5 +22,8 @@ A data frame.
 Reformat and map CALIBER codes for use with UK Biobank data
 }
 \seealso{
-\code{\link[=download_caliber_repo]{download_caliber_repo()}}
+Other CALIBER: 
+\code{\link{download_caliber_repo}()},
+\code{\link{get_caliber_categories_mapping}()}
 }
+\concept{CALIBER}
