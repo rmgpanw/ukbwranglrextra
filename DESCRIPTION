@@ -11,6 +11,9 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+Depends:
+    ukbwranglr (>= 0.0.0.9000),
+    codemapper (>= 0.0.0.9000)
 Imports:
     assertthat,
     broom,
@@ -38,14 +41,17 @@ Imports:
     tidyr,
     tidyselect,
     ukbwranglr,
+    utils,
     workflowsets
 Remotes: 
     github::rmgpanw/codemapper,
-    github::rmgpanw/ukbwranglr
+    github::rmgpanw/ukbwranglr,
+    github::PheWAS/PheWAS
 Suggests: 
-    knitr,
     covr,
-    testthat (>= 3.0.0),
-    rmarkdown
+    knitr,
+    PheWAS,
+    rmarkdown,
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr

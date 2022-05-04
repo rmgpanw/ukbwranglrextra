@@ -24,6 +24,7 @@
 #' @param strict_ukb If `TRUE`, extra checks are performed to check that
 #'   `source` and `data_coding` match [ukbwranglr::clinical_events_sources()],
 #'   and that column names match those expected for a clinical events table.
+#' @noRd
 #'
 #' @return A clinical events data frame.
 map_codes_ukb_clinical_events <- function(clinical_events,

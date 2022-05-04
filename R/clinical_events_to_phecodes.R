@@ -50,7 +50,7 @@ CLINICAL_EVENTS_SOURCES_MAPPED_TO_PHECODES <- c(
 #' ukbwranglrextra:::DUMMY_CLINICAL_EVENTS
 #'
 #' # map to phecodes
-#' map_clinical_events_to_phecodes2(
+#' map_clinical_events_to_phecodes(
 #'   clinical_events = ukbwranglrextra:::DUMMY_CLINICAL_EVENTS,
 #'   all_lkps_maps = ukbwranglrextra:::ALL_LKPS_MAPS,
 #'   min_date_only = FALSE)
@@ -343,7 +343,8 @@ map_clinical_events_source_to_phecode <- function(source,
       all_lkps_maps = all_lkps_maps,
       strict_ukb = FALSE
     ) %>%
-      codemapper:::strip_x_from_3char_icd10() %>%
+      dplyr::mutate("icd10" = stringr::str_remove(.data[["icd10"]],
+                                                  "X$")) %>%
       map_icd10_to_phecode(all_lkps_maps = all_lkps_maps)
   }
 

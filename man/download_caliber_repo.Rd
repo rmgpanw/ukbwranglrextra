@@ -19,7 +19,9 @@ unzipped folder.
 }
 \seealso{
 Other CALIBER: 
+\code{\link{default_overlapping_disease_categories_csv}()},
 \code{\link{get_caliber_categories_mapping}()},
-\code{\link{map_caliber_for_ukb}()}
+\code{\link{read_caliber_raw}()},
+\code{\link{reformat_caliber_for_ukb}()}
 }
 \concept{CALIBER}

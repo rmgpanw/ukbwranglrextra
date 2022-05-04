@@ -20,7 +20,9 @@ get_caliber_categories_mapping()
 }
 \seealso{
 Other CALIBER: 
+\code{\link{default_overlapping_disease_categories_csv}()},
 \code{\link{download_caliber_repo}()},
-\code{\link{map_caliber_for_ukb}()}
+\code{\link{read_caliber_raw}()},
+\code{\link{reformat_caliber_for_ukb}()}
 }
 \concept{CALIBER}

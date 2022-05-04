@@ -19,8 +19,13 @@ This can also be a \code{\link[dbplyr]{tbl_dbi}} object.}
 \item{all_lkps_maps}{Either a named list of lookup and mapping tables (either
 data frames or \code{tbl_dbi} objects), or the path to a SQLite database
 containing these tables (see also \code{\link[codemapper:build_all_lkps_maps]{build_all_lkps_maps()}} and
-\code{\link[codemapper:all_lkps_maps_to_db]{all_lkps_maps_to_db()}}). By default, will look for a SQLite datbase called
-\code{all_lkps_maps.db} in the current working directory.}
+\code{\link[codemapper:all_lkps_maps_to_db]{all_lkps_maps_to_db()}}). If \code{NULL}, will attempt to connect to an SQLite
+database named 'all_lkps_maps.db' in the current working directory, or to a
+a SQLite database specified by an environmental variable named
+'ALL_LKPS_MAPS_DB' (see
+\href{https://resources.numbat.space/using-rprofile-and-renviron.html#renviron}{here}
+for how to set environment variables using a \code{.Renviron} file). The latter
+method will be used in preference.}
 
 \item{min_date_only}{If \code{TRUE}, result will be filtered for only the earliest
 date per eid-phecode pair (date will be recorded as \code{NA} for cases where
@@ -43,7 +48,7 @@ Maps the following UK Biobank clinical events sources to phecodes: f40001, f4000
 ukbwranglrextra:::DUMMY_CLINICAL_EVENTS
 
 # map to phecodes
-map_clinical_events_to_phecodes2(
+map_clinical_events_to_phecodes(
   clinical_events = ukbwranglrextra:::DUMMY_CLINICAL_EVENTS,
   all_lkps_maps = ukbwranglrextra:::ALL_LKPS_MAPS,
   min_date_only = FALSE)

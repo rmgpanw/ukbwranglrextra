@@ -1,3 +1,7 @@
+
+# CONSTANTS ---------------------------------------------------------------
+
+
 ## Dummy all_lkps_maps --------------------------------------------------------------
 
 ALL_LKPS_MAPS <- list(
@@ -35,3 +39,18 @@ EXPECTED_CLINICAL_EVENTS_PHECODES <- tibble::tribble(
   2, "gpc3_r3",  "0_0", "XE0Uc", "2000-00-00",  "I10",  "401.1",
   1,  "f41270",  "0_0",      NA, "2000-00-00",  "I10",  "401.1"
 )
+
+# PUBLIC ------------------------------------------------------------------
+
+#' Dummy CALIBER repository
+#'
+#' Returns the file path to a dummy data
+#' [CALIBER](https://github.com/spiros/chronological-map-phenotypes) repository.
+#'
+#' @return A string.
+#' @export
+#' @family Dummy data
+dummy_caliber_dir_path <- function() {
+  system.file("extdata", "test_caliber_repo", package = "ukbwranglrextra")
+}
+
