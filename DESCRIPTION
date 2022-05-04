@@ -11,15 +11,10 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
-Depends:
-    ukbwranglr (>= 0.0.0.9000),
-    codemapper (>= 0.0.0.9000)
 Imports:
     assertthat,
     broom,
-    codemapper,
     data.table,
-    DBI,
     dplyr,
     fs,
     ggplot2,
@@ -41,12 +36,9 @@ Imports:
     tidyr,
     tidyselect,
     ukbwranglr,
-    utils,
     workflowsets
 Remotes: 
-    github::rmgpanw/codemapper,
-    github::rmgpanw/ukbwranglr,
-    github::PheWAS/PheWAS
+    github::rmgpanw/ukbwranglr
 Suggests: 
     covr,
     knitr,
