@@ -10,7 +10,7 @@ create_unique_id_df(
   ukb_data_dict = ukbwranglr::get_ukb_data_dict(),
   ukb_codings = ukbwranglr::get_ukb_codings(),
   descriptive_colnames = TRUE,
-  labelled = TRUE,
+  label = TRUE,
   field_ids = c("31", "52", "34", "21000", "53", "96", "50"),
   id_col = "..unique_id",
   remove = TRUE,
@@ -20,29 +20,27 @@ create_unique_id_df(
 \arguments{
 \item{path}{The path to a UK Biobank main dataset file.}
 
-\item{delim}{Delimiter for the UK Biobank main dataset file. Default is
-\code{\\t}}
+\item{delim}{Delimiter for the UKB main dataset file. Default is "auto" (see
+\code{\link[data.table:fread]{data.table::fread()}}). Ignored if the file name ends with \code{.dta}
+(i.e. is a STATA file) or if \code{ukb_main} is a data frame.}
 
 \item{ukb_data_dict}{The UKB data dictionary (available online at the UK
 Biobank
 \href{https://biobank.ctsu.ox.ac.uk/crystal/exinfo.cgi?src=accessing_data_guide}{data
- showcase}. This should be a data frame where all columns are of type
-\code{character}. By default, this is downloaded from the
-\href{https://github.com/rmgpanw/ukbwranglr_resources}{\code{ukbwranglr_resources}}
- github repo.}
+showcase}. This should be a data frame where all columns are of type
+\code{character}.}
 
-\item{ukb_codings}{The UKB codings dictionary. This should be a data frame
-where all columns are of type \code{character}. By default, this is
-downloaded from the
-\href{https://github.com/rmgpanw/ukbwranglr_resources}{\code{ukbwranglr_resources}}
- github repo.}
+\item{ukb_codings}{The UKB codings file (available online at the UK Biobank
+\href{https://biobank.ctsu.ox.ac.uk/crystal/exinfo.cgi?src=accessing_data_guide}{data
+showcase}. This should be a data frame where all columns are of type
+\code{character}.}
 
 \item{descriptive_colnames}{If \code{TRUE}, rename columns with longer
 descriptive names derived from the UK Biobank's data dictionary 'Field'
 column.}
 
-\item{labelled}{If \code{TRUE}, apply variable and value labels using
-\code{\link[haven]{labelled}}.}
+\item{label}{If \code{TRUE}, apply variable labels and label coded values as
+factors.}
 
 \item{field_ids}{A character vector of fields IDs that will be used to create
 the new unique ID column. These should match the values under column

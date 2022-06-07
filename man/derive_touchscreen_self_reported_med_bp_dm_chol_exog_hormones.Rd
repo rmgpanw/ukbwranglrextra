@@ -18,10 +18,8 @@ derive_touchscreen_self_reported_med_bp_dm_chol_exog_hormones(
 \item{ukb_data_dict}{The UKB data dictionary (available online at the UK
 Biobank
 \href{https://biobank.ctsu.ox.ac.uk/crystal/exinfo.cgi?src=accessing_data_guide}{data
- showcase}. This should be a data frame where all columns are of type
-\code{character}. By default, this is downloaded from the
-\href{https://github.com/rmgpanw/ukbwranglr_resources}{\code{ukbwranglr_resources}}
- github repo.}
+showcase}. This should be a data frame where all columns are of type
+\code{character}.}
 
 \item{instance}{Character. Optionally specify a single instance to be
 summarised e.g. '1'. Default is \code{NULL}, in which case the appended columns
