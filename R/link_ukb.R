@@ -46,7 +46,7 @@ create_unique_id_df <- function(path,
     ukb_data_dict = ukb_data_dict,
     ukb_codings = ukb_codings,
     descriptive_colnames = descriptive_colnames,
-    labelled = labelled
+    label = label
   )
 
   # append unique id
