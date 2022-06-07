@@ -92,7 +92,7 @@ get_ukb_synthetic_data <- function(
   # download files
   download_file_safely <- purrr::safely(ukbwranglr:::download_file)
 
-  result <- ukb_dummy_index_df[[dataset]][c('download_url', 'path')] %>%
+  result <- ukb_dummy_index_df[[dataset]][c('download_url', 'path', 'timeout')] %>%
     furrr::future_pmap(ukbwranglr:::download_file)
 
   ukbwranglr:::time_taken_message(start_time)
