@@ -1,9 +1,8 @@
 pandoc: 2.7.3
 pkgdown: 2.0.3
 pkgdown_sha: ~
-articles:
-  caliber: caliber.html
-last_built: 2022-04-28T08:22Z
+articles: {}
+last_built: 2022-06-07T14:00Z
 urls:
   reference: https://rmgpanw.github.io/ukbwranglrextra/reference
   article: https://rmgpanw.github.io/ukbwranglrextra/articles
