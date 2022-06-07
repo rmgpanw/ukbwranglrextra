@@ -38,6 +38,7 @@ Imports:
     ukbwranglr,
     workflowsets
 Remotes: 
+    github::PheWAS/PheWAS,
     github::rmgpanw/ukbwranglr
 Suggests: 
     covr,
