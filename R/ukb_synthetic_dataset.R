@@ -48,8 +48,10 @@ get_ukb_synthetic_dataset_html_links <- function(pattern = "md5$") {
 #' @param dataset Character. The name of one of the `.md5` files on the [UKB
 #'   synthetic data
 #'   webpage](https://biobank.ndph.ox.ac.uk/ukb/exinfo.cgi?src=UKB_Synthetic_Dataset.html).
-#'   All
+#'    All
 #' @param download_dir Directory to download files to.
+#' @param timeout Integer. Passed to `options()` to determine how long
+#'   `download.file()` attempts to download for.
 #'
 #' @return Invisibly returns a list with downloaded file paths and errors for
 #'   failed downloads.
@@ -61,7 +63,8 @@ get_ukb_synthetic_dataset_html_links <- function(pattern = "md5$") {
 #' }
 get_ukb_synthetic_data <- function(
   download_dir,
-  dataset = "tabular.md5") {
+  dataset = "tabular.md5",
+  timeout = 600) {
   # validate args
   match.arg(dataset,
             choices = UKB_SYNTHETIC_DATASET_DETAILS$md5)
@@ -79,6 +82,9 @@ get_ukb_synthetic_data <- function(
   # add download file paths
   ukb_dummy_index_df$path <- file.path(download_dir,
                                                 ukb_dummy_index_df$file_name)
+
+  # add download timeout option
+  ukb_dummy_index_df$timeout <- timeout
 
   # split by dataset
   ukb_dummy_index_df <- split(ukb_dummy_index_df, ukb_dummy_index_df$md5_file)
