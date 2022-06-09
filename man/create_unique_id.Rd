@@ -45,5 +45,6 @@ non-unique values.
 By default, the following field IDs are used: 31 (Sex), 52 (Month of birth),
 34 (Year of birth), 21000 (Ethnic background), 53 (Date of attending
 assessment centre), 96 (Time since interview start at which blood pressure
-screen(s) shown), and 50 (Standing height).
+screen(s) shown), and 50 (Standing height). Any columns of type factor will
+be converted to type integer.
 }

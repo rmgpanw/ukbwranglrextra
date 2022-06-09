@@ -71,7 +71,8 @@ create_unique_id_df <- function(path,
 #' By default, the following field IDs are used: 31 (Sex), 52 (Month of birth),
 #' 34 (Year of birth), 21000 (Ethnic background), 53 (Date of attending
 #' assessment centre), 96 (Time since interview start at which blood pressure
-#' screen(s) shown), and 50 (Standing height).
+#' screen(s) shown), and 50 (Standing height). Any columns of type factor will
+#' be converted to type integer.
 #'
 #' @param ukb_main A data frame - a UKB main dataset.
 #' @param ukb_data_dict The UK Biobank data dictionary (available
@@ -120,7 +121,10 @@ create_unique_id <- function(ukb_main,
 
   ukb_main <- ukb_main %>%
     dplyr::select(tidyselect::everything(),
-                  tidyselect::all_of(data_dict[["colheaders_raw"]]))
+                  tidyselect::all_of(data_dict[["colheaders_raw"]])) %>%
+    # convert factors to integers
+    dplyr::mutate(dplyr::across(tidyselect:::where(is.factor),
+                                as.integer))
 
   # create unique id col - unite values in selected `field_ids` columns
   ukb_main <- tidyr::unite(
