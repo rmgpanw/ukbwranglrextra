@@ -10,7 +10,7 @@ create_unique_id_df(
   ukb_data_dict = ukbwranglr::get_ukb_data_dict(),
   ukb_codings = ukbwranglr::get_ukb_codings(),
   descriptive_colnames = TRUE,
-  label = TRUE,
+  label = FALSE,
   field_ids = c("31", "52", "34", "21000", "53", "96", "50"),
   id_col = "..unique_id",
   remove = TRUE,
