@@ -148,7 +148,8 @@ plot_manhattan_basic <- function(df,
 
     # Label X axis. Labels positioned at centre of each chromosome
     ggplot2::scale_x_continuous(label = x_axis_df[[chr]],
-                                breaks = x_axis_df[["center"]])+
+                                breaks = x_axis_df[["center"]],
+                                expand = c(0.01, 0))+
 
     # Theme: remove background, legend, grid and panel borders
     ggplot2::theme_bw() +
