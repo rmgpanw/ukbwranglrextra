@@ -153,10 +153,7 @@ plot_manhattan_basic <- function(df,
     # Theme: remove background, legend, grid and panel borders
     ggplot2::theme_bw() +
     ggplot2::theme(
-      legend.position = "none",
-      panel.border = ggplot2::element_blank(),
-      panel.grid.major = ggplot2::element_blank(),
-      panel.grid.minor = ggplot2::element_blank()
+      legend.position = "none"
     ) +
 
     # Reduce space between plot area and x axis
