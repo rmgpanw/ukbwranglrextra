@@ -28,7 +28,8 @@ create_unique_id_df <- function(path,
                                 remove = TRUE,
                                 .ignore_duplicate_ids = FALSE) {
   # make data dictionary
-  data_dict <- ukbwranglr::make_data_dict(path)
+  data_dict <- ukbwranglr::make_data_dict(path,
+                                          ukb_data_dict = ukb_data_dict)
 
   # filter for eid and `field_ids`
   data_dict <- data_dict %>%
