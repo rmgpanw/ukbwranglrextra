@@ -2,7 +2,8 @@
 #'
 #' A convenience function that returns a data frame for a main UK Biobank
 #' dataset with a unique ID column, created by concatenating values from a
-#' selection of variables.
+#' selection of variables. **Manual validation of any subsequent linkage is
+#' strongly advised.**
 #'
 #' @inheritParams ukbwranglr::read_ukb
 #' @inheritParams data.table::fread
@@ -24,6 +25,7 @@ create_unique_id_df <- function(path,
                                               "53",
                                               "96",
                                               "50"),
+                                instances = "0",
                                 id_col = "..unique_id",
                                 remove = TRUE,
                                 .ignore_duplicate_ids = FALSE) {
@@ -37,7 +39,8 @@ create_unique_id_df <- function(path,
 
   # checks
   create_unique_id_validation_checks(data_dict = data_dict,
-                                     field_ids = field_ids)
+                                     field_ids = field_ids,
+                                     instances = instances)
 
   # read selected field_ids
   ukb_main <- ukbwranglr::read_ukb(
@@ -67,7 +70,8 @@ create_unique_id_df <- function(path,
 #'
 #' Creates a unique participant ID by concatenating values from a selection of
 #' UKB data fields. An error is raised if the final ID column contains
-#' non-unique values.
+#' non-unique values. **Manual validation of any subsequent linkage is strongly
+#' advised.**
 #'
 #' By default, the following field IDs are used: 31 (Sex), 52 (Month of birth),
 #' 34 (Year of birth), 21000 (Ethnic background), 53 (Date of attending
@@ -87,6 +91,10 @@ create_unique_id_df <- function(path,
 #' @param .ignore_duplicate_ids If \code{TRUE}, allow duplicate ID values and
 #'   raise a warning if any are found. May be helpful for debugging. By default
 #'   this is \code{FALSE}.
+#' @param instances A character vector of instances to include when generating
+#'   the new unique ID column. Note that more recent datasets may include
+#'   instances that are not present in older datasets.By default only the first
+#'   instance is used.
 #'
 #' @return A data frame with an additional column named as specified by
 #'   \code{id_col}.
@@ -100,6 +108,7 @@ create_unique_id <- function(ukb_main,
                                            "53",
                                            "96",
                                            "50"),
+                             instances = "0",
                              id_col = "..unique_id",
                              remove = TRUE,
                              .ignore_duplicate_ids = FALSE) {
@@ -107,9 +116,10 @@ create_unique_id <- function(ukb_main,
   data_dict <- ukb_main %>%
     ukbwranglr::make_data_dict(ukb_data_dict = ukb_data_dict)
 
-  # checks - also filter `data_dict` for only field ids in `field_ids`
+  # checks - also filter `data_dict` for specified Field IDs and instances
   data_dict <- create_unique_id_validation_checks(data_dict = data_dict,
-                                                  field_ids = field_ids)
+                                                  field_ids = field_ids,
+                                                  instances = instances)
 
   # arrange `data_dict` and `ukb_main` by FieldID/instance/array
   data_dict$FieldID_instance_array <- paste(data_dict$FieldID,
@@ -195,7 +205,8 @@ create_unique_id <- function(ukb_main,
 #'   \code{field_ids}.
 #' @noRd
 create_unique_id_validation_checks <- function(data_dict,
-                                               field_ids) {
+                                               field_ids,
+                                               instances) {
   # check that `field_ids` does not include eid's provided by UK Biobank
   assertthat::assert_that(!"Participant identifier ('eid')" %in% field_ids,
                           msg = "Error! `field_ids` cannot include 'Participant identifier ('eid')'")
@@ -222,37 +233,13 @@ create_unique_id_validation_checks <- function(data_dict,
   data_dict <- data_dict %>%
     dplyr::filter(.data[["FieldID"]] %in% !!field_ids)
 
-  # check that all instances/arrays are present
+  # check that all `instances` are present in dataset
+  missing_instances <-
+    subset(instances,!instances %in% data_dict$instances)
+
+  # filter data dictionary for these instances
   data_dict <- data_dict %>%
-    dplyr::mutate("..expected_ncol_for_fid" = as.numeric(.data[["Instances"]]) * as.numeric(.data[["Array"]])) %>%
-    dplyr::group_by(.data[["FieldID"]]) %>%
-    dplyr::mutate("..ncol_for_fid" = ifelse(.data[["FieldID"]] == "eid",
-                                            yes = NA_integer_,
-                                            no = dplyr::n())) %>%
-    dplyr::ungroup()
-
-  # character vector of field_ids with unexpected number of columns (i.e. the
-  # number of instances/arrays does not match that expected from the UKB data
-  # dictionary, which is available here:
-  # https://biobank.ctsu.ox.ac.uk/crystal/exinfo.cgi?src=accessing_data_guide .
-  # For example, if a field has 2 instances, each with 4 arrays, then one would
-  # expect to find 8 columns for this field in `ukb_main`)
-  fid_with_unexpected_ncol <- data_dict %>%
-    dplyr::filter(.data[["..expected_ncol_for_fid"]] != .data[["..ncol_for_fid"]]) %>%
-    dplyr::pull(.data[["Field"]]) %>%
-    unique()
-
-  assertthat::assert_that(
-    length(fid_with_unexpected_ncol) == 0,
-    msg = paste0(
-      "Error! The following field_ids have an unexpected number of columns in `ukb_main`: ",
-      stringr::str_c(
-        fid_with_unexpected_ncol,
-        sep = "",
-        collapse = ", "
-      )
-    )
-  )
+    dplyr::filter(.data[["instance"]] %in% !!instances)
 
   return(data_dict)
 }

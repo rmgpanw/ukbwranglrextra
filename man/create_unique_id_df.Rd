@@ -12,6 +12,7 @@ create_unique_id_df(
   descriptive_colnames = TRUE,
   label = FALSE,
   field_ids = c("31", "52", "34", "21000", "53", "96", "50"),
+  instances = "0",
   id_col = "..unique_id",
   remove = TRUE,
   .ignore_duplicate_ids = FALSE
@@ -46,6 +47,11 @@ factors.}
 the new unique ID column. These should match the values under column
 'Field' in the UK Biobank data dictionary.}
 
+\item{instances}{A character vector of instances to include when generating
+the new unique ID column. Note that more recent datasets may include
+instances that are not present in older datasets.By default only the first
+instance is used.}
+
 \item{id_col}{Name of the the new column to be created.}
 
 \item{remove}{If \code{TRUE}, remove input columns from output data frame.}
@@ -60,7 +66,8 @@ A data frame
 \description{
 A convenience function that returns a data frame for a main UK Biobank
 dataset with a unique ID column, created by concatenating values from a
-selection of variables.
+selection of variables. \strong{Manual validation of any subsequent linkage is
+strongly advised.}
 }
 \seealso{
 \code{\link{create_unique_id}}
