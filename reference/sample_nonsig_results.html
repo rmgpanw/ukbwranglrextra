@@ -69,19 +69,7 @@ up plotting.</p>
 will be sampled.</p></dd>
 
 
-<dt>n</dt>
-<dd><p>Provide either <code>n</code>, the number of rows, or <code>prop</code>, the
-proportion of rows to select. If neither are supplied, <code>n = 1</code> will be
-used.</p>
-<p>If a negative value of <code>n</code> or <code>prop</code> is provided, the specified number or
-proportion of rows will be removed.</p>
-<p>If <code>n</code> is greater than the number of rows in the group (or <code>prop &gt; 1</code>),
-the result will be silently truncated to the group size. If the
-<code>prop</code>ortion of a group size does not yield an integer number of rows, the
-absolute value of <code>prop*nrow(.data)</code> is rounded down.</p></dd>
-
-
-<dt>prop</dt>
+<dt>n, prop</dt>
 <dd><p>Provide either <code>n</code>, the number of rows, or <code>prop</code>, the
 proportion of rows to select. If neither are supplied, <code>n = 1</code> will be
 used.</p>
@@ -114,7 +102,7 @@ absolute value of <code>prop*nrow(.data)</code> is rounded down.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 11    l      -<span style="color: #BB0000;">0.1</span>  0.03 0.000<span style="text-decoration: underline;">1</span>     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 11    o      -<span style="color: #BB0000;">0.1</span>  0.03 0.000<span style="text-decoration: underline;">1</span>     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 11    k       0    0.02 0.08       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 2     f      -<span style="color: #BB0000;">0.1</span>  0.03 0.03       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 11    n       0    0.02 0.08       </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
