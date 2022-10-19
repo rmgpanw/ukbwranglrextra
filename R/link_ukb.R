@@ -30,23 +30,24 @@ create_unique_id_df <- function(path,
                                 remove = TRUE,
                                 .ignore_duplicate_ids = FALSE) {
   # make data dictionary
-  data_dict <- ukbwranglr::make_data_dict(path,
+  data_dict_full <- ukbwranglr::make_data_dict(path,
                                           ukb_data_dict = ukb_data_dict)
 
-  # filter for eid and `field_ids`
-  data_dict <- data_dict %>%
+  # variables to be loaded into R
+  data_dict_read_ukb <- data_dict_full %>%
     dplyr::filter(.data[["FieldID"]] %in% c("eid",!!field_ids))
 
-  # checks
-  create_unique_id_validation_checks(data_dict = data_dict,
-                                     field_ids = field_ids,
-                                     instances = instances)
+  # checks for link id
+  data_dict_link_id <-
+    create_unique_id_validation_checks(data_dict = data_dict_full,
+                                       field_ids = field_ids,
+                                       instances = instances)
 
   # read selected field_ids
   ukb_main <- ukbwranglr::read_ukb(
     path = path,
     delim = delim,
-    data_dict = data_dict,
+    data_dict = data_dict_read_ukb,
     ukb_data_dict = ukb_data_dict,
     ukb_codings = ukb_codings,
     descriptive_colnames = descriptive_colnames,
@@ -58,6 +59,7 @@ create_unique_id_df <- function(path,
     ukb_main = ukb_main,
     ukb_data_dict = ukb_data_dict,
     field_ids = field_ids,
+    instances = instances,
     id_col = id_col,
     remove = remove,
     .ignore_duplicate_ids = .ignore_duplicate_ids
@@ -203,7 +205,7 @@ create_unique_id <- function(ukb_main,
 #' @inheritParams create_unique_id
 #'
 #' @return Returns \code{data_dict}, filtered for only Field IDs in
-#'   \code{field_ids}.
+#'   \code{field_ids} and instances in `instances`.
 #' @noRd
 create_unique_id_validation_checks <- function(data_dict,
                                                field_ids,
