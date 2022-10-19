@@ -33,15 +33,14 @@ create_unique_id_df <- function(path,
   data_dict_full <- ukbwranglr::make_data_dict(path,
                                           ukb_data_dict = ukb_data_dict)
 
-  # variables to be loaded into R
-  data_dict_read_ukb <- data_dict_full %>%
-    dplyr::filter(.data[["FieldID"]] %in% c("eid",!!field_ids))
-
-  # checks for link id
-  data_dict_link_id <-
-    create_unique_id_validation_checks(data_dict = data_dict_full,
-                                       field_ids = field_ids,
-                                       instances = instances)
+  # checks for link id, and create `data_dict` for `read_ukb()`
+  data_dict_read_ukb <-
+    create_unique_id_validation_checks(
+      data_dict = data_dict_full,
+      field_ids = field_ids,
+      instances = instances,
+      keep_eid_col = TRUE
+    )
 
   # read selected field_ids
   ukb_main <- ukbwranglr::read_ukb(
@@ -122,7 +121,8 @@ create_unique_id <- function(ukb_main,
   # checks - also filter `data_dict` for specified Field IDs and instances
   data_dict <- create_unique_id_validation_checks(data_dict = data_dict,
                                                   field_ids = field_ids,
-                                                  instances = instances)
+                                                  instances = instances,
+                                                  keep_eid_col = FALSE)
 
   # arrange `data_dict` and `ukb_main` by FieldID/instance/array
   data_dict$FieldID_instance_array <- paste(data_dict$FieldID,
@@ -203,13 +203,16 @@ create_unique_id <- function(ukb_main,
 #' See code comments for checks.
 #'
 #' @inheritParams create_unique_id
+#' @param keep_eid_col If `TRUE`, retain eid col in returned data dictionary
+#'   data frame.
 #'
 #' @return Returns \code{data_dict}, filtered for only Field IDs in
 #'   \code{field_ids} and instances in `instances`.
 #' @noRd
 create_unique_id_validation_checks <- function(data_dict,
                                                field_ids,
-                                               instances) {
+                                               instances,
+                                               keep_eid_col = FALSE) {
   # check that `field_ids` does not include eid's provided by UK Biobank
   assertthat::assert_that(!"Participant identifier ('eid')" %in% field_ids,
                           msg = "Error! `field_ids` cannot include 'Participant identifier ('eid')'")
@@ -217,6 +220,10 @@ create_unique_id_validation_checks <- function(data_dict,
   # check that 'eid' column is present
   assertthat::assert_that("eid" %in% data_dict[["FieldID"]],
                           msg = "Error! An 'eid' column must be present in `ukb_main`")
+
+  # keep eid row separately
+  eid_row <- data_dict %>%
+    dplyr::filter(FieldID == "eid")
 
   # check that all `field_ids` are present in dataset
   missing_fields_ids <-
@@ -248,6 +255,12 @@ create_unique_id_validation_checks <- function(data_dict,
   # filter data dictionary for these instances
   data_dict <- data_dict %>%
     dplyr::filter(.data[["instance"]] %in% !!instances)
+
+  # add back eid row, if needed
+  if (keep_eid_col) {
+    data_dict <- eid_row %>%
+      dplyr::bind_rows(data_dict)
+  }
 
   return(data_dict)
 }
