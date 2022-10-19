@@ -48,8 +48,9 @@ the new unique ID column. These should match the values under column
 'Field' in the UK Biobank data dictionary.}
 
 \item{instances}{A character vector of instances to include when generating
-the new unique ID column. Note that more recent datasets may include
-instances that are not present in older datasets.By default only the first
+the new unique ID column. Should contain one or more of the following
+digits: '0', '1', '2', '3'. Note that more recent datasets may include
+instances that are not present in older datasets. By default only the first
 instance is used.}
 
 \item{id_col}{Name of the the new column to be created.}

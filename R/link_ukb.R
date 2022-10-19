@@ -92,8 +92,9 @@ create_unique_id_df <- function(path,
 #'   raise a warning if any are found. May be helpful for debugging. By default
 #'   this is \code{FALSE}.
 #' @param instances A character vector of instances to include when generating
-#'   the new unique ID column. Note that more recent datasets may include
-#'   instances that are not present in older datasets.By default only the first
+#'   the new unique ID column. Should contain one or more of the following
+#'   digits: '0', '1', '2', '3'. Note that more recent datasets may include
+#'   instances that are not present in older datasets. By default only the first
 #'   instance is used.
 #'
 #' @return A data frame with an additional column named as specified by
@@ -233,9 +234,14 @@ create_unique_id_validation_checks <- function(data_dict,
   data_dict <- data_dict %>%
     dplyr::filter(.data[["FieldID"]] %in% !!field_ids)
 
-  # check that all `instances` are present in dataset
-  missing_instances <-
-    subset(instances,!instances %in% data_dict$instances)
+  # check that `instances` are valid
+  valid_instances_msg <- "Argument `instances` should be a character vector containing one or more of the following digits: '0', '1', '2', '3'."
+
+  assertthat::assert_that(is.character(instances),
+                          msg = valid_instances_msg)
+
+  assertthat::assert_that(all(instances %in% c("0", "1", "2", "3")),
+                          msg = valid_instances_msg)
 
   # filter data dictionary for these instances
   data_dict <- data_dict %>%
