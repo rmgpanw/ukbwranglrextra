@@ -566,7 +566,7 @@ runMakeDataset <- function(ukb_data_dict = ukbwranglr::get_ukb_data_dict(),
             ukb_codings = ukb_codings,
             data_dict = data_dict()[selected(),],
             descriptive_colnames = input$descriptive_colnames,
-            labelled = input$labelled,
+            label = input$labelled,
             nrows = input$nrows
           )
 
@@ -585,8 +585,8 @@ runMakeDataset <- function(ukb_data_dict = ukbwranglr::get_ukb_data_dict(),
         if (length(input$summarise_numerical_variables > 0)) {
           notify("Summarising numerical variables...", id = id)
           for (summary_function in input$summarise_numerical_variables) {
-            ukb_main <- ukbwranglr::summarise_numerical_variables(ukb_main = ukb_main,
-                                                      summary_function = summary_function)
+            try(ukb_main <- ukbwranglr::summarise_numerical_variables(ukb_main = ukb_main,
+                                                      summary_function = summary_function))
           }
         }
 
@@ -689,7 +689,7 @@ runMakeDataset <- function(ukb_data_dict = ukbwranglr::get_ukb_data_dict(),
             ukb_codings = ukb_codings,
             data_dict = clinical_events_data_dict,
             descriptive_colnames = TRUE,
-            labelled = FALSE,
+            label = FALSE,
             nrows = input$nrows_clinical_events
           )
 
